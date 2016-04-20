@@ -1,0 +1,88 @@
+<?php
+
+if ($_POST['psq_razao_empresa'])
+{
+    
+    $dados = EmpresaDAO::selectAll(null, 'razao_social like \'%'.$_POST['psq_razao_empresa'].'%\'');        
+    
+    $g = new TGrid('gd', 'Empresas Cadastradas', $dados, null, null, 'codigo_empresa', null, 15, null);
+    $g->addColumn('razao_social', 'Razão Social', 400, 'left');
+    $g->addColumn('fantasia', 'Nome Fantasia', 300, 'left');
+    //$g->addColumn('cancelada', 'Cancelada', 30, 'center');
+    $g->addButton('Alterar', null, 'btnAlterar', 'grideAlterar()', null, 'editar.gif', null, 'Alterar Empresa');
+   // $g->addButton('Cancelar', null, 'btnCancelar', 'grideCancelar()', null, 'lixeira.gif', null, 'Cancelar Cirurgia');
+
+    //  $g->addButton( 'Imprimir', null, 'btnpdf','gerar_pdf',null,'print16.gif' );
+    $g->addFooter('Total de registros: ' . $g->getRowCount());
+
+    // adicionar função de tratamento da montagem do gride para desabilitar as ações de alterar e excluir do usuário admin
+    $g->setOnDrawActionButton('tratarBotoes');
+    // adicionar função de tratemanto da linha para mudar a cor da fonte dos registros cancelados
+    $g->setOnDrawRow('tratarLinha');
+    // adicionar função para tratamento da celula cancelado para escrever sim ou não
+    $g->setOnDrawCell('tratarCelula');
+    $g->show();
+    
+}
+else
+{
+    echo '<h3><center><blink>Informe algo para pesquisar!</blink></center></h3>';
+}
+
+/**
+ * funções de configuração do Gride
+ */
+function tratarBotoes($rowNum, $button, $objColumn, $aData)
+{
+    if ($aData['RAZAO_SOCIAL'] == '')
+    {
+        $button->setVisible(false);
+    }
+
+    if ($aData['CANCELADA'] == 'S' && $button->getId() == 'btnCancelar')
+    {
+        $button->setVisible(false);
+    }
+}
+
+function tratarLinha($row, $rowNum, $aData)
+{
+    if ($aData['CANCELADA'] == 'S')
+    {
+        $row->setCss('color', '#f00');
+    }
+    else
+    {
+        $row->setCss('color', '#008000');
+    }
+}
+
+function tratarCelula($rowNum, $cell, $objColumn, $aData, $edit = null)
+{
+
+    if ($objColumn->getFieldName() == 'cancelada')
+    {
+        if ($aData['CANCELADA'] == 'S')
+        {
+            $cell->setValue('Sim');
+        }
+        else
+        {
+            $cell->setValue('Não');
+        }
+    }
+	else if( $objColumn->getFieldName() == 'razao_social')
+	{
+		
+            $link = new TElement('a');
+		$link->setId('link'.$rowNum);
+		$link->setProperty('href','#');
+                $link->add($aData['RAZAO_SOCIAL']);
+	//	$link->addEvent('onclick','alert("Link '.$rowNum.' foi clicado!")');
+                $link->addEvent('onclick','grideAlterar()');
+		$cell->setValue($link);
+         
+	}
+}
+
+?>
