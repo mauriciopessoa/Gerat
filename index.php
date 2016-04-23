@@ -70,5 +70,6 @@ function login_info()
 		return '<b>'.$_SESSION[APLICATIVO]['usuario']['nome'].'</b>';
 	}
 	return 'Bem-Vindo';
+        echo "teste";
 }
 ?>
