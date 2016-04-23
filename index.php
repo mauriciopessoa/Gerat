@@ -13,7 +13,7 @@ else
 }
 
 
-define('APLICATIVO','Gerat'); //
+define('APLICATIVO','Gerat2'); //
 define('DECIMAL_SEPARATOR',',');
 
 
