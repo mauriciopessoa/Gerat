@@ -30,7 +30,8 @@ class Cid_10DAO extends TPDOConnection
 	{
 		$values = array($id);
 		return self::executeSql('select
-								 cod_cid
+								 codigo
+								,cod_cid
 								,descricao
 								from cid_10 where codigo = ?', $values );
 	}
@@ -38,7 +39,8 @@ class Cid_10DAO extends TPDOConnection
 	public static function selectAll( $orderBy=null, $where=null )
 	{
 		return self::executeSql('select
-								 cod_cid
+								 codigo
+								,cod_cid
 								,descricao
 								from cid_10'.
 		( ($where)? ' where '.$where:'').

@@ -15,7 +15,7 @@ $frm = new TForm('Cadastro de CID', 530, 1000);
 
 Cid_10DAO::executeSql("set names utf8"); // configurando acentuação no mysql
 
-$frm->addHiddenField('codigo');
+//$frm->addHiddenField('codigo');
 
 
 //$frm->setColumns(100); // define a primeira coluna do formulï¿½rio para 100 px
@@ -33,16 +33,16 @@ $page->setColorHighlightBackground('#FDFCD7'); // cor de fundo do campo que poss
 
 
 
-//$frm->addTextField('codigo','Código:',10,false,10,null,null,null,null,true)->addEvent('onblur','buscaCID(this)');
-$frm->addTextField('cod_cid', 'Código CID10:', 50,true,50,null,false,null,null,true)->setCss( 'font-size', '14px')->setCss('text-transform', 'uppercase')->addEvent('onblur','upperCase(this)');
-$frm->addTextField('descricao', 'Descrição:', 50,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)');
+$frm->addTextField('codigo','Código:',10,false,10,null,null,null,null,true)->addEvent('onblur','buscaCID(this)');
+$frm->addTextField('cod_cid', 'Código CID10:', 50,true,50,null,true,null,null,true)->setCss( 'font-size', '14px')->setCss('text-transform', 'uppercase')->addEvent('onblur','upperCase(this)');
+$frm->addTextField('descricao', 'Descrição:', 50,true,50,null,true,null,null,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)');
 
 //$frm->addButtonAjax('Salvar', null, 'antesSalvar', 'depoisSalvar', 'salvar', 'text', false, null, 'btnSalvar',false);
 // $frm->addButton('Novo', null, 'btnNovo', 'novo()');
 
 $frm->addButtonAjax('Salvar',null,'antesSalvar','depoisSalvar','salvar','Salvando...','text',false,null,'btnSalvar');
 
-$frm->addButton('Novo', null, 'btnNovo', 'novo()', null, true, false)->setCss('font-size','24px');
+//$frm->addButton('Novo', null, 'btnNovo', 'novo()', null, true, false)->setCss('font-size','24px');
 
 
 $page = $pc->addPage('Pesquisar Cid', false, true, 'abaCID');
@@ -50,7 +50,7 @@ $page->setColumns(100); // define a primeira coluna do formulï¿½rio da aba para 
 // o atributo noclear evita que a funï¿½ï¿½o fwClearFields limpe o campo
 
 
-$frm->addTextField('descricao', 'Localizar por Nome:', 40, false)->setAttribute('noclear', 'true')->setTooltip('Pesquisar - Informe o nome ou parte do nome e clique no botï¿½o Pesquisar!');
+$frm->addTextField('descricao2', 'Localizar por Nome:', 40, false)->setAttribute('noclear', 'true')->setTooltip('Pesquisar - Informe o nome ou parte do nome e clique no botï¿½o Pesquisar!');
 $frm->addButton('Pesquisar', null, 'btnPesquisar', 'atualizarGride()', null, false, false);
 $frm->addHtmlField('html_gride');
 
@@ -182,7 +182,7 @@ $frm->show();
             "action": "alterar",
             "dataType": "json",
             
-            "data": {"cod_cid": valorChave},
+            "data": {"codigo": valorChave},
             "callback": function(dados)
             {
                 fwClearChildFields();
