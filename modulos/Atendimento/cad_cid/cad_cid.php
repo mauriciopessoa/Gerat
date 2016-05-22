@@ -50,7 +50,7 @@ $page->setColumns(100); // define a primeira coluna do formul�rio da aba para 
 // o atributo noclear evita que a fun��o fwClearFields limpe o campo
 
 
-$frm->addTextField('descricao2', 'Localizar por Nome:', 40, false)->setAttribute('noclear', 'true')->setTooltip('Pesquisar - Informe o nome ou parte do nome e clique no bot�o Pesquisar!');
+$frm->addTextField('psq_cid', 'Localizar por Nome:', 40, false)->setAttribute('noclear', 'true')->setTooltip('Pesquisar - Informe o nome ou parte do nome e clique no bot�o Pesquisar!');
 $frm->addButton('Pesquisar', null, 'btnPesquisar', 'atualizarGride()', null, false, false);
 $frm->addHtmlField('html_gride');
 
@@ -136,6 +136,7 @@ $frm->show();
         else
         {
             fwAlert('Dados gravados com SUCESSO!');
+            fwClearChildFields();
           //  novo();
         }
     }
@@ -144,7 +145,7 @@ $frm->show();
     {
         fwClearChildFields();
         fwSelecionarAba('abaCadastro');
-        fwSetFocus('codigo_empresa');
+        fwSetFocus('codigo');
     }
 
     function abaClick(pc, aba, id)
@@ -152,14 +153,14 @@ $frm->show();
         if (id == 'abaCadastro')
         {
 
-            if (jQuery("#psq_razao_empresa").val() != '')
+            if (jQuery("#psq_cid").val() != '')
             {
                 atualizarGride();
             }
 
         }
 
-        if (id == 'abaEmpresa')
+        if (id == 'abaCID')
         {
 
             jQuery("#Salvar").attr('disabled', 'disabled');
@@ -171,7 +172,7 @@ $frm->show();
     
     function atualizarGride()
     {
-        fwGetGrid('empresa/cadastro_empresa.php', 'html_gride', {"action": "criar_gride", "psq_razao_empresa": ""});
+        fwGetGrid('atendimento/cad_cid/cad_cid.php', 'html_gride', {"action": "criar_gride", "psq_cid": ""});
         
     }
     
@@ -205,7 +206,7 @@ $frm->show();
             "action": "alterar",
             "dataType": "json",
             //"data": {"id": valorChave},
-            "data": {"cod_cid": valorChave},
+            "data": {"codigo": valorChave},
             "callback": function(dados)
             {
                 if (dados.message)

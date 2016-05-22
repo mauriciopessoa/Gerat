@@ -1,42 +1,31 @@
 <?php
-class PerfilVO
+class EspecialidadeVO
 {
-	private $id_perfil = null;
-	private $perfil = null;
-	private $cancelado = null;
-	public function PerfilVO( $id_perfil=null, $perfil=null, $cancelado=null )
+	private $codigo = null;
+	private $descricao = null;
+	public function EspecialidadeVO( $codigo=null, $descricao=null )
 	{
-		$this->setId_perfil( $id_perfil );
-		$this->setPerfil( $perfil );
-		$this->setCancelado( $cancelado );
+		$this->setCodigo( $codigo );
+		$this->setDescricao( $descricao );
 	}
 	//--------------------------------------------------------------------------------
-	function setId_perfil( $strNewValue = null )
+	function setCodigo( $strNewValue = null )
 	{
-		$this->id_perfil = $strNewValue;
+		$this->codigo = $strNewValue;
 	}
-	function getId_perfil()
+	function getCodigo()
 	{
-		return $this->id_perfil;
-	}
-	//--------------------------------------------------------------------------------
-	function setPerfil( $strNewValue = null )
-	{
-		$this->perfil = $strNewValue;
-	}
-	function getPerfil()
-	{
-		return $this->perfil;
+		return $this->codigo;
 	}
 	//--------------------------------------------------------------------------------
-	function setCancelado( $strNewValue = null )
+	function setDescricao( $strNewValue = null )
 	{
-		$this->cancelado = $strNewValue;
+		$this->descricao = $strNewValue;
 	}
-	function getCancelado()
+	function getDescricao()
 	{
-		return $this->cancelado;
+		return $this->descricao;
 	}
-
+	//--------------------------------------------------------------------------------
 }
 ?>

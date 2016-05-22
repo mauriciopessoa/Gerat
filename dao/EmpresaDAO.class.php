@@ -16,7 +16,6 @@ class EmpresaDAO extends TPDOConnection
 						, $objVo->getEndereco() 
 						, $objVo->getBairro() 
 						, $objVo->getCidade() 
-						, $objVo->getMunicipio() 
 						, $objVo->getUf() 
 						, $objVo->getCep() 
 						, $objVo->getCnpj() 
@@ -33,7 +32,6 @@ class EmpresaDAO extends TPDOConnection
 								,endereco
 								,bairro
 								,cidade
-								,municipio
 								,uf
 								,cep
 								,cnpj
@@ -43,7 +41,7 @@ class EmpresaDAO extends TPDOConnection
 								,telefone2
 								,fax
 								,situacao		
-								) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', $values );
+								) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)', $values );
 	}
 	//--------------------------------------------------------------------------------
 	public static function delete( $id )
@@ -62,8 +60,7 @@ class EmpresaDAO extends TPDOConnection
 								,endereco
 								,bairro
 								,cidade
-								,municipio
-								,uf
+                                                                ,uf
 								,cep
 								,cnpj
 								,ie
@@ -84,7 +81,6 @@ class EmpresaDAO extends TPDOConnection
 								,endereco
 								,bairro
 								,cidade
-								,municipio
 								,uf
 								,cep
 								,cnpj
@@ -106,7 +102,6 @@ class EmpresaDAO extends TPDOConnection
 						,$objVo->getEndereco()
 						,$objVo->getBairro()
 						,$objVo->getCidade()
-						,$objVo->getMunicipio()
 						,$objVo->getUf()
 						,$objVo->getCep()
 						,$objVo->getCnpj()
@@ -123,7 +118,6 @@ class EmpresaDAO extends TPDOConnection
 								,endereco = ?
 								,bairro = ?
 								,cidade = ?
-								,municipio = ?
 								,uf = ?
 								,cep = ?
 								,cnpj = ?

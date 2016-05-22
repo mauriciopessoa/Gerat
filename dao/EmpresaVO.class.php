@@ -7,7 +7,6 @@ class EmpresaVO
 	private $endereco = null;
 	private $bairro = null;
 	private $cidade = null;
-	private $municipio = null;
 	private $uf = null;
 	private $cep = null;
 	private $cnpj = null;
@@ -25,7 +24,6 @@ class EmpresaVO
 		$this->setEndereco( $endereco );
 		$this->setBairro( $bairro );
 		$this->setCidade( $cidade );
-		$this->setMunicipio( $municipio );
 		$this->setUf( $uf );
 		$this->setCep( $cep );
 		$this->setCnpj( $cnpj );
@@ -90,15 +88,7 @@ class EmpresaVO
 	{
 		return $this->cidade;
 	}
-	//--------------------------------------------------------------------------------
-	function setMunicipio( $strNewValue = null )
-	{
-		$this->municipio = $strNewValue;
-	}
-	function getMunicipio()
-	{
-		return $this->municipio;
-	}
+	
 	//--------------------------------------------------------------------------------
 	function setUf( $strNewValue = null )
 	{

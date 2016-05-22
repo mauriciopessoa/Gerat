@@ -9,11 +9,11 @@ define('UTF8_DECODE',0);
 
 // para mySql
 define('BANCO','MYSQL');
-define('HOST','localhost');
+define('HOST','sql5.freesqldatabase.com');
 define('PORT','3306');
-define('DATABASE','gerat');
-define('USUARIO','root');
-define('SENHA','');
+define('DATABASE','sql5120145');
+define('USUARIO','sql5120145');
+define('SENHA','vxFqNaFYBx');
 define('UTF8_DECODE',1);
 
 

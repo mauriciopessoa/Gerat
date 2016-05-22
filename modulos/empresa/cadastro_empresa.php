@@ -42,14 +42,29 @@ $frm->setOnlineSearch('codigo_empresa','empresa'
 	);
 
 $frm->addTextField('razao_social', 'Razão Social:', 50,true,50,null,false,null,null,true)->setCss( 'font-size', '14px')->setCss('text-transform', 'uppercase')->addEvent('onblur','upperCase(this)');
-$frm->addTextField('fantasia', 'nome Fantasia:', 50,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)');
+$frm->addTextField('fantasia', 'Nome Fantasia:', 50,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)');
+$frm->addTextField('endereco', 'Endereço:', 50,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)');
+$frm->addTextField('bairro', 'Bairro:', 50,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)');
+$frm->addTextField('cidade', 'Cidade:', 50,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)');
+$frm->addCepField('cep','CEP:',9,true);
+$frm->addSelectField('codigo','UF:',false,'SELECT codigo,sigla FROM sql5120145.uf')->setCss('font-size','14px');
+$frm->addEmailField(email,'Email:',50,true);
+$frm->addFoneField('telefone1','Telefone 1:',11,true);
+$frm->addFoneField('telefone2','Telefone 1:',11,true);
+$frm->addFoneField('fax','Fax:',11,true);
+
+
+
 $frm->addCpfCnpjField('cnpj','CNPJ:',true,null,true)->setCss('font-size','14px');
+$frm->addCpfCnpjField('ie','Inscrição Estadual:',true,null,true)->setCss('font-size','14px');
 $frm->addSelectField('situacao', 'Situação:', false, 'A=Ativa,I=Inativa', false, null, null, null, null, null, null, 'A')->setCss('font-size','14px');
 
 //$frm->addButtonAjax('Salvar', null, 'antesSalvar', 'depoisSalvar', 'salvar', 'text', false, null, 'btnSalvar',false);
 // $frm->addButton('Novo', null, 'btnNovo', 'novo()');
 
-$frm->addButtonAjax('Salvar',null,'antesSalvar','depoisSalvar','salvar','Salvando...','text',false,null,'btnSalvar');
+    
+        
+$frm->addButtonAjax('Salvar',null,'antesSalvar','depoisSalvar','salvar','Salvando...','text',false,null,'btnSalvar')->setCss('font-size','24px');
 
 $frm->addButton('Novo', null, 'btnNovo', 'novo()', null, true, false)->setCss('font-size','24px');
 
@@ -59,8 +74,8 @@ $page->setColumns(100); // define a primeira coluna do formulï¿½rio da aba para 
 // o atributo noclear evita que a funï¿½ï¿½o fwClearFields limpe o campo
 
 
-$frm->addTextField('psq_razao_empresa', 'Localizar por Nome:', 40, false)->setAttribute('noclear', 'true')->setTooltip('Pesquisar - Informe o nome ou parte do nome e clique no botï¿½o Pesquisar!');
-$frm->addButton('Pesquisar', null, 'btnPesquisar', 'atualizarGride()', null, false, false);
+$frm->addTextField('psq_razao_empresa', 'Localizar por Nome:', 40, false)->setAttribute('noclear', 'true')->setTooltip('Pesquisar - Informe o nome ou parte do nome e clique no botï¿½o Pesquisar!')->addEvent('onblur','fwClearChildFields()');
+$frm->addButton('Pesquisar', null, 'btnPesquisar', 'atualizarGride()', null, true, false);
 $frm->addHtmlField('html_gride');
 
 $frm->closeGroup(); // fim das abas

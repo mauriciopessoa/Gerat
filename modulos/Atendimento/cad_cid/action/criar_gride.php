@@ -1,15 +1,17 @@
 <?php
 
-if ($_POST['psq_nome_paciente'])
+if ($_POST['psq_cid'])
 {
-    $dados = Tb_agendamentoDAO::selecionarCirurgias($_POST['psq_nome_paciente']);
-    $g = new TGrid('gd', 'Cirurgias agendadas', $dados, null, null, 'ID', null, 15, null);
-    $g->addColumn('nome_paciente', 'Nome do Paciente', 400, 'left');
-    $g->addColumn('data_cirurgia', 'Data Cirurgia', 62, 'center');
-    $g->addColumn('desc_cirurgia_principal', 'Cirurgia Principal', 300, 'left');
-    $g->addColumn('cancelada', 'Cancelada', 30, 'center');
-    $g->addButton('Alterar', null, 'btnAlterar', 'grideAlterar()', null, 'editar.gif', null, 'Alterar Cirurgia');
-   // $g->addButton('Cancelar', null, 'btnCancelar', 'grideCancelar()', null, 'lixeira.gif', null, 'Cancelar Cirurgia');
+    
+    
+    $dados = Cid_10DAO::selectAll(null, 'descricao like \'%'.$_POST['psq_cid'].'%\'');  
+    echo $dados;
+    $g = new TGrid('gd', 'Cid cadastrada', $dados, null, null, 'codigo', null, 15, null);
+    $g->addColumn('codigo', 'id', 400, 'left');
+    $g->addColumn('cod_cid', 'Cód. CID', 62, 'center');
+    $g->addColumn('descricao', 'Descrição', 300, 'left');
+    $g->addButton('Alterar', null, 'btnAlterar', 'grideAlterar()', null, 'editar.gif', null, 'Alterar Cid');
+    //$g->addButton('Cancelar', null, 'btnCancelar', 'grideCancelar()', null, 'lixeira.gif', null, 'Excluir CID');
 
     //  $g->addButton( 'Imprimir', null, 'btnpdf','gerar_pdf',null,'print16.gif' );
     $g->addFooter('Total de registros: ' . $g->getRowCount());
@@ -32,43 +34,193 @@ else
  */
 function tratarBotoes($rowNum, $button, $objColumn, $aData)
 {
-    if ($aData['NOME_PACIENTE'] == '')
+    if ($aData['codigo'] == '')
     {
         $button->setVisible(false);
     }
 
-    if ($aData['CANCELADA'] == 'S' && $button->getId() == 'btnCancelar')
-    {
-        $button->setVisible(false);
-    }
+ 
 }
 
-function tratarLinha($row, $rowNum, $aData)
-{
-    if ($aData['CANCELADA'] == 'S')
-    {
-        $row->setCss('color', '#f00');
-    }
-    else
-    {
-        $row->setCss('color', '#008000');
-    }
-}
 
-function tratarCelula($rowNum, $cell, $objColumn, $aData, $edit = null)
-{
 
-    if ($objColumn->getFieldName() == 'cancelada')
+
+?>
+
+
+
+<script>
+
+    
+
+
+    //jQuery("#data_cadastro").attr('readonly', 'true');
+
+    //jQuery("#Novo").attr('disabled', 'true');
+
+    function pegaNomeConvenio(e)
     {
-        if ($aData['CANCELADA'] == 'S')
+        //fwAtualizarCampos('nome_convenio', jQuery("#cod_convenio option:selected").text());
+        
+    }
+
+    function pegaNomeCirurgia(e)
+    {
+        //fwAtualizarCampos('desc_cirurgia_principal', jQuery("#cod_cirurgia_principal option:selected").text());
+        
+    }
+
+    function pegaNomeCirurgiao(e)
+    {
+        //fwAtualizarCampos('nome_cirurgiao_principal', jQuery("#cod_cirurgiao_principal option:selected").text());
+        
+    }
+
+    function pegaNomeEspecialidade(e)
+    {
+        //fwAtualizarCampos('desc_especialidade', jQuery("#cod_especialidade option:selected").text());
+        
+    }
+
+    function sai(e)
+    {
+        //alert(jQuery("#data_cadastro").val());
+        
+
+    }
+	
+	function upperCase(obj)
+	{
+		obj.value = obj.value.toUpperCase();
+	}
+	
+
+    function antesSalvar()
+    {
+		
+        if (!fwValidateFields())
         {
-            $cell->setValue('Sim');
+            return false;
+        }
+
+        return true;
+
+    }
+
+    function depoisSalvar(res)
+    {
+        if (res)
+        {
+            fwAlert(res);
         }
         else
         {
-            $cell->setValue('Não');
+            fwAlert('Dados gravados com SUCESSO!');
+            fwClearChildFields();
+          //  novo();
         }
     }
-}
 
-?>
+    function novo()
+    {
+        fwClearChildFields();
+        fwSelecionarAba('abaCadastro');
+        fwSetFocus('codigo');
+    }
+
+    function abaClick(pc, aba, id)
+    {
+        if (id == 'abaCadastro')
+        {
+
+            if (jQuery("#psq_cid").val() != '')
+            {
+                atualizarGride();
+            }
+
+        }
+
+        if (id == 'abaCID')
+        {
+
+            jQuery("#Salvar").attr('disabled', 'disabled');
+
+        }
+
+
+    }
+    
+    function atualizarGride()
+    {
+        fwGetGrid('atendimento/cad_cid/cad_cid.php', 'html_gride', {"action": "criar_gride", "psq_cid": ""});
+        
+    }
+    
+    function buscaCID(campoChave, valorChave)
+    {
+        
+        fwAjaxRequest({
+            "action": "alterar",
+            "dataType": "json",
+            
+            "data": {"codigo": valorChave},
+            "callback": function(dados)
+            {
+                fwClearChildFields();
+                if (dados.message)
+                {
+                    fwAlert(dados.message);
+                    return;
+                }
+        
+                fwUpdateFieldsJson(dados);
+                fwSelecionarAba('abaCadastro');
+                
+            }
+        });
+    }
+    
+    function grideAlterar(campoChave, valorChave)
+    {
+        fwAjaxRequest({
+            "action": "alterar",
+            "dataType": "json",
+            //"data": {"id": valorChave},
+            "data": {"codigo": valorChave},
+            "callback": function(dados)
+            {
+                if (dados.message)
+                {
+                    fwAlert(dados.message);
+                    return;
+                }
+                fwUpdateFieldsJson(dados);
+                fwSelecionarAba('abaCadastro');
+            }
+        });
+    }
+    function grideCancelar(campoChave, valorChave)
+    {
+        if (fwConfirm('Deseja cancelar a cirurgia ?',
+                function(r) {
+                    if (r == true)
+                    {
+                        fwAjaxRequest({
+                            "action": "cancelar",
+                            "dataType": "text",
+                            "data": {"id": valorChave},
+                            "callback": function(res)
+                            {
+                                if (res)
+                                {
+                                    fwAlert(res);
+                                }
+                                atualizarGride();
+                            }
+                        });
+                    }
+                })
+                )
+            ;
+    }
+</script>
