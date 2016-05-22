@@ -49,8 +49,8 @@ $frm->addTextField('cidade', 'Cidade:', 50,true)->setCss('font-size','14px')->ad
 $frm->addCepField('cep','CEP:',9,true);
 $frm->addSelectField('codigo','UF:',false,'SELECT codigo,sigla FROM sql5120145.uf')->setCss('font-size','14px');
 $frm->addEmailField(email,'Email:',50,true);
-$frm->addFoneField('telefone1','Telefone 1:',11,true);
-$frm->addFoneField('telefone2','Telefone 1:',11,true);
+$frm->addFoneField('telefone1','Telefone principal:',11,true);
+$frm->addFoneField('telefone2','Telefone alternativo:',11,true);
 $frm->addFoneField('fax','Fax:',11,true);
 
 
