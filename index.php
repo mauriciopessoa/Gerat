@@ -17,6 +17,7 @@ define('APLICATIVO','Gerat'); //
 define('DECIMAL_SEPARATOR',',');
 
 
+
 $app = new TApplication('Gerat','Gestão de Atendimentos','imagens/simbolo_radiologia.png', date('d/m/y'));
 
 //$app->setTitle('Plutos 2');
@@ -24,15 +25,11 @@ $app = new TApplication('Gerat','Gestão de Atendimentos','imagens/simbolo_radiol
 
 // defini??o do menu principal
 $app->setMainMenuFile('includes/menu.php');
-
-
-
-
-
-
-
+$app->setBodyContent('includes/menu2.php');
 // cololcar a logo do formdin como marca d`agua
 $app->setWaterMark('imagens/simbolo_radiologia2.jpg');
+
+$app->run();
 
 // Definir o mï¿½dulo de login e a funï¿½ï¿½o de verificaï¿½ï¿½o se o login jï¿½ foi feito.
 // Esta funï¿½ï¿½o PHP serï¿½ responsï¿½vel por retornar true ou false para a aplicaï¿½ï¿½o,
@@ -48,10 +45,12 @@ exibidos no canto superior direito da tela
 //$app->setDefaultModule('../base/includes/gerador_vo_dao.php');
 //TPDOConnection::Test();
 
-$app->run();
 
-/**
-* Funï¿½ï¿½o para verificar se o login jï¿½ foi feito.
+
+
+
+
+/* Funï¿½ï¿½o para verificar se o login jï¿½ foi feito.
 * Se retornar false, a TApplication vai exibir a tela de login
 *
 */

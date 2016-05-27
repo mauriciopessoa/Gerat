@@ -154,6 +154,8 @@ class TApplication extends TLayout
 		// arquivo css padrão localizado na base base/css
 		$this->addCssFile( 'app.css' );
 		$this->setBackgroundImage( $this->getBase() . '/css/imagens/app/bg_listrado.jpg' );
+                $this->setBodyContent( $this->getBase() . '/includes/menu2' );
+            
 
 		// biblioteca de funções geral
 		$this->addIncludeFile( $this->getBase() . 'includes/funcoes.inc' );
@@ -592,6 +594,7 @@ class TApplication extends TLayout
 		{
 			// montar o cabeçalho da pagina
 			$this->buildPageHeader();
+                        
 
 			// montar o rodapé da pagina
 			$this->buildPageFooter();
@@ -1061,7 +1064,7 @@ class TApplication extends TLayout
 	}
 
 	//-------------------------------------------------------------------------------------------
-	public function setMainMenuFile( $strNewValue = null )
+            public function setMainMenuFile( $strNewValue = null )
 	{
 		$this->mainMenuFile = $strNewValue;
 	}
@@ -1413,6 +1416,7 @@ class TApplication extends TLayout
 	public function setBodyContent( $strNewValue = null )
 	{
 		$this->bodyContent = $strNewValue;
+                
 	}
 
 	public function getBodyContent()
@@ -1425,7 +1429,7 @@ class TApplication extends TLayout
 			}
 			else
 			{
-				return 'Arquivo <b>' . $this->bodyContent . '<b> definido para o corpo não encontrado.';
+				return 'Arquivo <b>' . $this->bodyContent . '<b> definido para o corpo nbodão encontrado.';
 			}
 		}
 

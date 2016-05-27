@@ -7,6 +7,10 @@
  */
 
 
+
+
+
+
 define('REQUIRED_FIELD_MARK', '*'); // alterar a identifica��o dos campos obrigat�rios para * vermelho
 
 $frm = new TForm('Cadastro de CID', 530, 1000);
@@ -44,8 +48,7 @@ $frm->addButtonAjax('Salvar',null,'antesSalvar','depoisSalvar','salvar','Salvand
 
 //$frm->addButton('Novo', null, 'btnNovo', 'novo()', null, true, false)->setCss('font-size','24px');
 
-
-$page = $pc->addPage('Pesquisar Cid', false, true, 'abaCID');
+$page = $pc->addPage('Pesquisar Cid', false, true, 'abaCID')->addEvent('onload','fwSetFocus(psq_cid)');
 $page->setColumns(100); // define a primeira coluna do formul�rio da aba para 80 px
 // o atributo noclear evita que a fun��o fwClearFields limpe o campo
 
@@ -112,6 +115,7 @@ $frm->show();
 	function upperCase(obj)
 	{
 		obj.value = obj.value.toUpperCase();
+                
 	}
 	
 
@@ -137,7 +141,7 @@ $frm->show();
         {
             fwAlert('Dados gravados com SUCESSO!');
             fwClearChildFields();
-          //  novo();
+           novo();
         }
     }
 
@@ -146,13 +150,16 @@ $frm->show();
         fwClearChildFields();
         fwSelecionarAba('abaCadastro');
         fwSetFocus('codigo');
+
     }
+    
 
     function abaClick(pc, aba, id)
     {
         if (id == 'abaCadastro')
         {
-
+           
+            fwSetFocus('codigo');
             if (jQuery("#psq_cid").val() != '')
             {
                 atualizarGride();
@@ -162,7 +169,7 @@ $frm->show();
 
         if (id == 'abaCID')
         {
-
+            fwSetFocus('psq_cid');
             jQuery("#Salvar").attr('disabled', 'disabled');
 
         }
@@ -221,14 +228,14 @@ $frm->show();
     }
     function grideCancelar(campoChave, valorChave)
     {
-        if (fwConfirm('Deseja cancelar a cirurgia ?',
+        if (fwConfirm('Deseja excluir a CID selecionada ?',
                 function(r) {
                     if (r == true)
                     {
                         fwAjaxRequest({
                             "action": "cancelar",
                             "dataType": "text",
-                            "data": {"id": valorChave},
+                            "data": {"codigo": valorChave},
                             "callback": function(res)
                             {
                                 if (res)

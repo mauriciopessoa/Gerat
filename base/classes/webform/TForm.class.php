@@ -5985,7 +5985,7 @@ class TForm Extends TBox
 	*
 	* @param mixed $boolNewValue
 	*/
-	public function setFormGridOffLine($boolNewValue=null)
+	public function setFormsOffLine($boolNewValue=null)
 	{
 		$this->formGridOffLine = $boolNewValue;
 	}

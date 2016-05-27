@@ -1,1 +1,0 @@
-a:2:{s:2:"id";a:1:{i:0;s:1:"1";}s:11:"Descrição";a:1:{i:0;s:11:"CARDIOLOGIA";}}

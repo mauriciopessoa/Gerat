@@ -10,7 +10,7 @@ if ($_POST['psq_especialidade'])
     $g->addColumn('codigo', 'id', 400, 'left');
     $g->addColumn('descricao', 'Descrição', 300, 'left');
     $g->addButton('Alterar', null, 'btnAlterar', 'grideAlterar()', null, 'editar.gif', null, 'Alterar Especialidade');
-    //$g->addButton('Cancelar', null, 'btnCancelar', 'grideCancelar()', null, 'lixeira.gif', null, 'Excluir CID');
+    $g->addButton('Cancelar', null, 'btnCancelar', 'grideCancelar()', null, 'lixeira.gif', null, 'Excluir CID');
 
     //  $g->addButton( 'Imprimir', null, 'btnpdf','gerar_pdf',null,'print16.gif' );
     $g->addFooter('Total de registros: ' . $g->getRowCount());
@@ -35,7 +35,7 @@ function tratarBotoes($rowNum, $button, $objColumn, $aData)
 {
     if ($aData['codigo'] == '')
     {
-        $button->setVisible(false);
+        //$button->setVisible(false);
     }
 
  

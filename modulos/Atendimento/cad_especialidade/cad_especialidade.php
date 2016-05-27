@@ -220,14 +220,14 @@ $frm->show();
     }
     function grideCancelar(campoChave, valorChave)
     {
-        if (fwConfirm('Deseja cancelar a cirurgia ?',
+        if (fwConfirm('Deseja excluir esta especialidade ?',
                 function(r) {
                     if (r == true)
                     {
                         fwAjaxRequest({
                             "action": "cancelar",
                             "dataType": "text",
-                            "data": {"id": valorChave},
+                            "data": {"codigo": valorChave},
                             "callback": function(res)
                             {
                                 if (res)

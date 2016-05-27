@@ -1,3 +1,3 @@
 <?php
-Tb_agendamentoDAO::delete($frm->get('id'));
+EmpresaDAO::delete($frm->get('codigo_empresa'));
 ?>

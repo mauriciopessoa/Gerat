@@ -10,7 +10,7 @@ if ($_POST['psq_razao_empresa'])
     $g->addColumn('fantasia', 'Nome Fantasia', 300, 'left');
     //$g->addColumn('cancelada', 'Cancelada', 30, 'center');
     $g->addButton('Alterar', null, 'btnAlterar', 'grideAlterar()', null, 'editar.gif', null, 'Alterar Empresa');
-   // $g->addButton('Cancelar', null, 'btnCancelar', 'grideCancelar()', null, 'lixeira.gif', null, 'Cancelar Cirurgia');
+    $g->addButton('Cancelar', null, 'btnCancelar', 'grideCancelar()', null, 'lixeira.gif', null, 'Excluir empresa');
 
     //  $g->addButton( 'Imprimir', null, 'btnpdf','gerar_pdf',null,'print16.gif' );
     $g->addFooter('Total de registros: ' . $g->getRowCount());
@@ -71,13 +71,13 @@ function tratarCelula($rowNum, $cell, $objColumn, $aData, $edit = null)
             $cell->setValue('Não');
         }
     }
-	else if( $objColumn->getFieldName() == 'razao_social')
+	else if( $objColumn->getFieldName() == 'descricao')
 	{
 		
             $link = new TElement('a');
 		$link->setId('link'.$rowNum);
 		$link->setProperty('href','#');
-                $link->add($aData['RAZAO_SOCIAL']);
+                $link->add($aData['descricao']);
 	//	$link->addEvent('onclick','alert("Link '.$rowNum.' foi clicado!")');
                 $link->addEvent('onclick','grideAlterar()');
 		$cell->setValue($link);

@@ -20,7 +20,6 @@ $menu->add(2,0,'Relatórios',null,null,'print16.gif');
         
 $menu->add(3,0,'Gerador DAO/VO','base/includes/gerador_vo_dao.php');
 $menu->getXml();
-$menu2 = new TMenuDhtmlx();
-$menu2->add(1,0,'Cadastro',null,null,'folderopen16.gif');
+
 
 ?>

@@ -27,17 +27,18 @@ $page->setColorHighlightBackground('#FDFCD7'); // cor de fundo do campo que poss
 
 
 $frm->addTextField('codigo_empresa','Código:',10,false,10,null,null,null,null,true)->addEvent('onblur','buscaEmpresa(this)');
+
 $frm->setOnlineSearch('codigo_empresa','empresa'
 	,'razao_social|Razão Social:'
 	,false
 	,false
 	,true // se for encontrada apenas 1 opÃ§Ã£o fazer a seleï¿½ï¿½o automaticamente
-	,'codigo_empresa|Código,razao_social|Razão Social'
+	,'codigo_empresa|Código,razao_social|Razão Social,|Ação'
 	,'razao_social|Razão Social'
 	,null
 	,null,null,null,null,null,null
 	,'funcaoRetorno()'
-	,null,null,null,null,null,null,null,null
+	,10,null,null,null,null,null,null,null
 	,false // caseSensitive
 	);
 
@@ -47,7 +48,7 @@ $frm->addTextField('endereco', 'Endereço:', 50,true)->setCss('font-size','14px')
 $frm->addTextField('bairro', 'Bairro:', 50,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)');
 $frm->addTextField('cidade', 'Cidade:', 50,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)');
 $frm->addCepField('cep','CEP:',9,true);
-$frm->addSelectField('codigo','UF:',false,'SELECT codigo,sigla FROM sql5120145.uf')->setCss('font-size','14px');
+$frm->addSelectField('uf','UF:',false,'SELECT codigo,sigla FROM sql5120145.uf')->setCss('font-size','14px');
 $frm->addEmailField(email,'Email:',50,true);
 $frm->addFoneField('telefone1','Telefone principal:',11,true);
 $frm->addFoneField('telefone2','Telefone alternativo:',11,true);
@@ -62,11 +63,7 @@ $frm->addSelectField('situacao', 'Situação:', false, 'A=Ativa,I=Inativa', false,
 //$frm->addButtonAjax('Salvar', null, 'antesSalvar', 'depoisSalvar', 'salvar', 'text', false, null, 'btnSalvar',false);
 // $frm->addButton('Novo', null, 'btnNovo', 'novo()');
 
-    
-        
-$frm->addButtonAjax('Salvar',null,'antesSalvar','depoisSalvar','salvar','Salvando...','text',false,null,'btnSalvar')->setCss('font-size','24px');
-
-$frm->addButton('Novo', null, 'btnNovo', 'novo()', null, true, false)->setCss('font-size','24px');
+          
 
 
 $page = $pc->addPage('Pesquisar Empresa', false, true, 'abaEmpresa');
@@ -81,6 +78,9 @@ $frm->addHtmlField('html_gride');
 $frm->closeGroup(); // fim das abas
 
 $frm->processAction();
+$frm->addButtonAjax('Salvar',null,'antesSalvar','depoisSalvar','salvar','Salvando...','text',false,null,'btnSalvar')->setCss('font-size','24px');
+
+$frm->addButtonAjax('Novo', null, 'btnNovo', 'novo()', null, true, false)->setCss('font-size','24px');
 
 
 $frm->show();
@@ -185,8 +185,11 @@ $frm->show();
 
         if (id == 'abaEmpresa')
         {
-
+           
             jQuery("#Salvar").attr('disabled', 'disabled');
+             $("#Salvar").css("display", "none");
+             $("#btnSalvar").hide("slow");
+             fwSetFocus('psq_cid');
 
         }
 
@@ -244,14 +247,14 @@ $frm->show();
     }
     function grideCancelar(campoChave, valorChave)
     {
-        if (fwConfirm('Deseja cancelar a cirurgia ?',
+        if (fwConfirm('Deseja excluir empresa ?',
                 function(r) {
                     if (r == true)
                     {
                         fwAjaxRequest({
                             "action": "cancelar",
                             "dataType": "text",
-                            "data": {"id": valorChave},
+                            "data": {"codigo_empresa": valorChave},
                             "callback": function(res)
                             {
                                 if (res)
@@ -266,4 +269,10 @@ $frm->show();
                 )
             ;
     }
+    
+    
+    function funcaoRetorno()
+{
+	fwModalBox('Teste','http://www.bb.com.br',800,600);
+}
 </script>
