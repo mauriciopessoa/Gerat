@@ -29,16 +29,16 @@ $page->setColorHighlightBackground('#FDFCD7'); // cor de fundo do campo que poss
 $frm->addTextField('codigo_empresa','Código:',10,false,10,null,null,null,null,true)->addEvent('onblur','buscaEmpresa(this)');
 
 $frm->setOnlineSearch('codigo_empresa','empresa'
-	,'razao_social|Razão Social:'
+	,'razao_social|Razão Social:||||||true|true'
 	,false
-	,false
+	,true
 	,true // se for encontrada apenas 1 opÃ§Ã£o fazer a seleï¿½ï¿½o automaticamente
-	,'codigo_empresa|Código,razao_social|Razão Social,|Ação'
-	,'razao_social|Razão Social'
+	,'codigo_empresa|Código,razao_social|Razão Social'
+	,'codigo_empresa,razao_social,fantasia,endereco,bairro,cidade,cep,uf,email,telefone1,telefone2,fax,cnpj,ie,situacao'
 	,null
 	,null,null,null,null,null,null
 	,'funcaoRetorno()'
-	,10,null,null,null,null,null,null,null
+	,10,null,null,'codigo_empresa','codigo_empresa',null,null,null
 	,false // caseSensitive
 	);
 
@@ -273,6 +273,6 @@ $frm->show();
     
     function funcaoRetorno()
 {
-	fwModalBox('Teste','http://www.bb.com.br',800,600);
+	
 }
 </script>
