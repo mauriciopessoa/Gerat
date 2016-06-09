@@ -1,4 +1,6 @@
+
 <?php
+
 if( file_exists('./base'))
 {
 	require_once('./base/classes/webform/TApplication.class.php');
@@ -18,16 +20,18 @@ define('DECIMAL_SEPARATOR',',');
 
 
 
-$app = new TApplication('Gerat','Gestão de Atendimentos','imagens/simbolo_radiologia.png', date('d/m/y'));
+
+$app = new TApplication('GERAT','Gestão de Atendimento','', date('d/m/y'));
 
 //$app->setTitle('Plutos 2');
 
 
 // defini??o do menu principal
 $app->setMainMenuFile('includes/menu.php');
-$app->setBodyContent('includes/menu2.php');
+//$app->setBodyContent('includes/menu2.php');
 // cololcar a logo do formdin como marca d`agua
-$app->setWaterMark('imagens/simbolo_radiologia2.jpg');
+$app->setWaterMark('imagens/gerat.png');
+
 
 $app->run();
 
