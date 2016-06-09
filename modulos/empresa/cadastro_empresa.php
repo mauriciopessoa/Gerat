@@ -159,55 +159,13 @@ $frm->show();
         });
     }
     
-    function grideAlterar(campoChave, valorChave)
-    {
-        fwAjaxRequest({
-            "action": "alterar",
-            "dataType": "json",
-            //"data": {"id": valorChave},
-            "data": {"codigo_empresa": valorChave},
-            "callback": function(dados)
-            {
-                if (dados.message)
-                {
-                    fwAlert(dados.message);
-                    return;
-                }
-                fwUpdateFieldsJson(dados);
-             //   fwSelecionarAba('abaCadastro');
-            }
-        });
-    }
-    function grideCancelar(campoChave, valorChave)
-    {
-        if (fwConfirm('Deseja excluir empresa ?',
-                function(r) {
-                    if (r == true)
-                    {
-                        fwAjaxRequest({
-                            "action": "cancelar",
-                            "dataType": "text",
-                            "data": {"codigo_empresa": valorChave},
-                            "callback": function(res)
-                            {
-                                if (res)
-                                {
-                                    fwAlert(res);
-                                }
-                                atualizarGride();
-                            }
-                        });
-                    }
-                })
-                )
-            ;
-    }
+   
     
     
     function funcaoRetorno()
-{
+    {
 	 return;
-}
+    }
 
 
  //envento onkeyup
@@ -222,16 +180,7 @@ $frm->show();
  }
 //11.111.111/111-11
 
- function retiraFormatacao(CPF)
- {
- 	with (CPF)
- 	{
- 		value = value.replace (".","");
- 		value = value.replace (".","");
- 		value = value.replace ("-","");
- 		value = value.replace ("/","");
- 	}
- }
+ 
 
 </script>
 
