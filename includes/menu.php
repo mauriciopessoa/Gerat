@@ -9,6 +9,8 @@ $menu->add(11,1,'Faturamento',null,null,'folderopen16.gif');
 $menu->add(16,1,'Atendimento',null,null,'folderopen16.gif');
         $menu->add(17,16,'CID','atendimento/cad_cid.php','Cadastro de CID','folderAzulOpen.gif');
         $menu->add(18,16,'Especialidade','atendimento/cad_especialidade/cad_especialidade.php','Cadastro de Especialidade','folderAzulOpen.gif');
+$menu->add(19,1,'Financeiro',null,null,'folderopen16.gif');
+        $menu->add(20,19,'Bancos','atendimento/cad_cid.php','Cadastro de CID','folderAzulOpen.gif');
 $menu->add(2,0,'Relatórios',null,null,'print16.gif');
 	$menu->add(21,2,'Cirurgias x Médicos',null,null,'print16.gif');
 	$menu->add(22,2,'Cirurgias x Data de Cadastro',null,null,'print16.gif');
