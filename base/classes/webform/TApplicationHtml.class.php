@@ -86,7 +86,7 @@ class TApplicationHtml
 		// desabilitar tecla F5
 		$this->page->getBody()->setProperty('onKeyDown',"javascript:try{ return fwCancelRefresh(event); } catch(e){};");
 
-		$this->setBackgroundImage($this->page->getBase().'css/imagens/app/bg_listrado.jpg');
+		//$this->setBackgroundImage($this->page->getBase().'css/imagens/app/bg_listrado.jpg');
 
 		// biblioteca de funções geral
 		$this->addIncludeFile($this->page->getBase().'includes/funcoes.inc');

@@ -8,15 +8,15 @@ class EmpresaVO
 	private $bairro = null;
 	private $cidade = null;
 	private $uf = null;
-	private $cep = null;
 	private $cnpj = null;
 	private $ie = null;
 	private $email = null;
+	private $cep = null;
 	private $telefone1 = null;
 	private $telefone2 = null;
 	private $fax = null;
-	private $situacao		 = null;
-	public function EmpresaVO( $codigo_empresa=null, $razao_social=null, $fantasia=null, $endereco=null, $bairro=null, $cidade=null, $municipio=null, $uf=null, $cep=null, $cnpj=null, $ie=null, $email=null, $telefone1=null, $telefone2=null, $fax=null, $situacao		=null )
+	private $situacao = null;
+	public function EmpresaVO( $codigo_empresa=null, $razao_social=null, $fantasia=null, $endereco=null, $bairro=null, $cidade=null, $uf=null, $cnpj=null, $ie=null, $email=null, $cep=null, $telefone1=null, $telefone2=null, $fax=null, $situacao=null )
 	{
 		$this->setCodigo_empresa( $codigo_empresa );
 		$this->setRazao_social( $razao_social );
@@ -25,14 +25,14 @@ class EmpresaVO
 		$this->setBairro( $bairro );
 		$this->setCidade( $cidade );
 		$this->setUf( $uf );
-		$this->setCep( $cep );
 		$this->setCnpj( $cnpj );
 		$this->setIe( $ie );
 		$this->setEmail( $email );
+		$this->setCep( $cep );
 		$this->setTelefone1( $telefone1 );
 		$this->setTelefone2( $telefone2 );
 		$this->setFax( $fax );
-		$this->setSituacao		( $situacao		 );
+		$this->setSituacao( $situacao );
 	}
 	//--------------------------------------------------------------------------------
 	function setCodigo_empresa( $strNewValue = null )
@@ -88,7 +88,6 @@ class EmpresaVO
 	{
 		return $this->cidade;
 	}
-	
 	//--------------------------------------------------------------------------------
 	function setUf( $strNewValue = null )
 	{
@@ -97,15 +96,6 @@ class EmpresaVO
 	function getUf()
 	{
 		return $this->uf;
-	}
-	//--------------------------------------------------------------------------------
-	function setCep( $strNewValue = null )
-	{
-		$this->cep = $strNewValue;
-	}
-	function getCep()
-	{
-		return $this->cep;
 	}
 	//--------------------------------------------------------------------------------
 	function setCnpj( $strNewValue = null )
@@ -119,7 +109,7 @@ class EmpresaVO
 	//--------------------------------------------------------------------------------
 	function setIe( $strNewValue = null )
 	{
-		$this->ie = $strNewValue;
+		$this->ie = preg_replace('/[^0-9]/','',$strNewValue);
 	}
 	function getIe()
 	{
@@ -133,6 +123,15 @@ class EmpresaVO
 	function getEmail()
 	{
 		return $this->email;
+	}
+	//--------------------------------------------------------------------------------
+	function setCep( $strNewValue = null )
+	{
+		$this->cep = $strNewValue;
+	}
+	function getCep()
+	{
+		return $this->cep;
 	}
 	//--------------------------------------------------------------------------------
 	function setTelefone1( $strNewValue = null )
@@ -162,13 +161,13 @@ class EmpresaVO
 		return $this->fax;
 	}
 	//--------------------------------------------------------------------------------
-	function setSituacao		( $strNewValue = null )
+	function setSituacao( $strNewValue = null )
 	{
-		$this->situacao		 = $strNewValue;
+		$this->situacao = $strNewValue;
 	}
-	function getSituacao		()
+	function getSituacao()
 	{
-		return $this->situacao		;
+		return $this->situacao;
 	}
 	//--------------------------------------------------------------------------------
 }

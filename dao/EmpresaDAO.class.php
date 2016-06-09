@@ -17,14 +17,14 @@ class EmpresaDAO extends TPDOConnection
 						, $objVo->getBairro() 
 						, $objVo->getCidade() 
 						, $objVo->getUf() 
-						, $objVo->getCep() 
 						, $objVo->getCnpj() 
 						, $objVo->getIe() 
 						, $objVo->getEmail() 
+						, $objVo->getCep() 
 						, $objVo->getTelefone1() 
 						, $objVo->getTelefone2() 
 						, $objVo->getFax() 
-						, $objVo->getSituacao		() 
+						, $objVo->getSituacao() 
 						);
 		return self::executeSql('insert into empresa(
 								 razao_social
@@ -33,14 +33,14 @@ class EmpresaDAO extends TPDOConnection
 								,bairro
 								,cidade
 								,uf
-								,cep
 								,cnpj
 								,ie
 								,email
+								,cep
 								,telefone1
 								,telefone2
 								,fax
-								,situacao		
+								,situacao
 								) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)', $values );
 	}
 	//--------------------------------------------------------------------------------
@@ -60,15 +60,15 @@ class EmpresaDAO extends TPDOConnection
 								,endereco
 								,bairro
 								,cidade
-                                                                ,uf
-								,cep
+								,uf
 								,cnpj
 								,ie
 								,email
+								,cep
 								,telefone1
 								,telefone2
 								,fax
-								,situacao		
+								,situacao
 								from empresa where codigo_empresa = ?', $values );
 	}
 	//--------------------------------------------------------------------------------
@@ -82,14 +82,14 @@ class EmpresaDAO extends TPDOConnection
 								,bairro
 								,cidade
 								,uf
-								,cep
 								,cnpj
 								,ie
 								,email
+								,cep
 								,telefone1
 								,telefone2
 								,fax
-								,situacao		
+								,situacao
 								from empresa'.
 		( ($where)? ' where '.$where:'').
 		( ($orderBy) ? ' order by '.$orderBy:''));
@@ -103,14 +103,14 @@ class EmpresaDAO extends TPDOConnection
 						,$objVo->getBairro()
 						,$objVo->getCidade()
 						,$objVo->getUf()
-						,$objVo->getCep()
 						,$objVo->getCnpj()
 						,$objVo->getIe()
 						,$objVo->getEmail()
+						,$objVo->getCep()
 						,$objVo->getTelefone1()
 						,$objVo->getTelefone2()
 						,$objVo->getFax()
-						,$objVo->getSituacao		()
+						,$objVo->getSituacao()
 						,$objVo->getCodigo_empresa() );
 		return self::executeSql('update empresa set 
 								 razao_social = ?
@@ -119,14 +119,14 @@ class EmpresaDAO extends TPDOConnection
 								,bairro = ?
 								,cidade = ?
 								,uf = ?
-								,cep = ?
 								,cnpj = ?
 								,ie = ?
 								,email = ?
+								,cep = ?
 								,telefone1 = ?
 								,telefone2 = ?
 								,fax = ?
-								,situacao		 = ?
+								,situacao = ?
 								where codigo_empresa = ?',$values);
 	}
 	//--------------------------------------------------------------------------------

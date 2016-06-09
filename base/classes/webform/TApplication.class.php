@@ -153,7 +153,7 @@ class TApplication extends TLayout
 
 		// arquivo css padrão localizado na base base/css
 		$this->addCssFile( 'app.css' );
-		$this->setBackgroundImage( $this->getBase() . '/css/imagens/app/bg_listrado.jpg' );
+		//$this->setBackgroundImage( $this->getBase() . '/css/imagens/app/bg_listrado.jpg' );
                 $this->setBodyContent( $this->getBase() . '/includes/menu2' );
             
 
