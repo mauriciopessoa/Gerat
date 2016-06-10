@@ -15,45 +15,28 @@ $frm = new TForm('Cadastro de Especialidades Médicas', 530, 1000);
 
 EspecialidadeDAO::executeSql("set names utf8"); // configurando acentuação no mysql
 
-//$frm->addHiddenField('codigo');
-
-
-//$frm->setColumns(100); // define a primeira coluna do formulï¿½rio para 100 px
-// define a largura das colunas verticais do formulario para alinhamento dos campos 
-//$frm->setColumns(array(100,100,100)); 
-//$frm->setColumns(array(100,100)); 
-
-
-
-$pc = $frm->addPageControl('pc', null, null, null, 'abaClick()');
-$page = $pc->addPage('Cadastro', true, true, 'abaCadastro');
-$page->setColorHighlightBackground('#FDFCD7'); // cor de fundo do campo que possuir dica ( hint )
-//$frm->addDateField('data_cadastro', 'Data Cadastro:', true, false, date("d/m/Y")); //->addEvent('onblur','sai(this)');
-
-
-
 
 $frm->addTextField('codigo','Código:',10,false,10,null,null,null,null,true)->addEvent('onblur','buscaEspecialidade(this)');
+
+$frm->setOnlineSearch('codigo','especialidade'
+	,'descricao|Pesquisa por nome:||||||true|true'
+	,false
+	,true
+	,true // se for encontrada apenas 1 opÃ§Ã£o fazer a seleï¿½ï¿½o automaticamente
+	,'codigo|Código,descricao|Descriçao'
+	,'codigo,descricao'
+	,null
+	,null,null,null,null,null,null
+	,'funcaoRetorno()'
+	,10,null,null,'descricao','codigo',null,null,null
+	,false // caseSensitive
+	);
+
 $frm->addTextField('descricao', 'Descrição:', 50,true,50,null,true,null,null,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)');
 
-//$frm->addButtonAjax('Salvar', null, 'antesSalvar', 'depoisSalvar', 'salvar', 'text', false, null, 'btnSalvar',false);
-// $frm->addButton('Novo', null, 'btnNovo', 'novo()');
-
-$frm->addButtonAjax('Salvar',null,'antesSalvar','depoisSalvar','salvar','Salvando...','text',false,null,'btnSalvar');
-
-//$frm->addButton('Novo', null, 'btnNovo', 'novo()', null, true, false)->setCss('font-size','24px');
-
-
-$page = $pc->addPage('Pesquisar Especialidade', false, true, 'abaEspecialidade');
-$page->setColumns(100); // define a primeira coluna do formulï¿½rio da aba para 80 px
-// o atributo noclear evita que a funï¿½ï¿½o fwClearFields limpe o campo
-
-
-$frm->addTextField('psq_especialidade', 'Localizar por Nome:', 40, false)->setAttribute('noclear', 'true')->setTooltip('Pesquisar - Informe o nome ou parte do nome e clique no botï¿½o Pesquisar!');
-$frm->addButton('Pesquisar', null, 'btnPesquisar', 'atualizarGride()', null, false, false);
-$frm->addHtmlField('html_gride');
-
-$frm->closeGroup(); // fim das abas
+$frm->addButtonAjax('Incluir',null,null,'novo','novo','Novo...','text',false,null,'btnNovo',null,'fwSave.png','fwSave.png','fwSave.png')->setCss('font-size','24px');
+$frm->addButtonAjax('Alterar',null,'antesSalvar','depoisSalvar','salvar','Salvando...','text',false,null,'btnSalvar',null,'fwSave.png','fwSave.png','editar.gif')->setCss('font-size','24px');
+$frm->addButton('Excluir', null, 'btnCancelar', 'grideCancelar()', null, null, null, 'lixeira.gif');
 
 $frm->processAction();
 
@@ -72,41 +55,6 @@ $frm->show();
 
     
 
-
-    //jQuery("#data_cadastro").attr('readonly', 'true');
-
-    //jQuery("#Novo").attr('disabled', 'true');
-
-    function pegaNomeConvenio(e)
-    {
-        //fwAtualizarCampos('nome_convenio', jQuery("#cod_convenio option:selected").text());
-        
-    }
-
-    function pegaNomeCirurgia(e)
-    {
-        //fwAtualizarCampos('desc_cirurgia_principal', jQuery("#cod_cirurgia_principal option:selected").text());
-        
-    }
-
-    function pegaNomeCirurgiao(e)
-    {
-        //fwAtualizarCampos('nome_cirurgiao_principal', jQuery("#cod_cirurgiao_principal option:selected").text());
-        
-    }
-
-    function pegaNomeEspecialidade(e)
-    {
-        //fwAtualizarCampos('desc_especialidade', jQuery("#cod_especialidade option:selected").text());
-        
-    }
-
-    function sai(e)
-    {
-        //alert(jQuery("#data_cadastro").val());
-        
-
-    }
 	
 	function upperCase(obj)
 	{
@@ -128,11 +76,13 @@ $frm->show();
 
     function depoisSalvar(res)
     {
-        if (res)
+        
+        if (res.indexOf('nome_especialidade') >= 0)   
         {
-            fwAlert(res);
+            
+            fwAlert('Especialiadade já cadastrada.');
         }
-        else
+           else
         {
             fwAlert('Dados gravados com SUCESSO!');
             fwClearChildFields();
@@ -143,37 +93,9 @@ $frm->show();
     function novo()
     {
         fwClearChildFields();
-        fwSelecionarAba('abaCadastro');
         fwSetFocus('codigo');
     }
 
-    function abaClick(pc, aba, id)
-    {
-        if (id == 'abaCadastro')
-        {
-
-            if (jQuery("#psq_especialidade").val() != '')
-            {
-                atualizarGride();
-            }
-
-        }
-
-        if (id == 'abaEspecialidade')
-        {
-
-            jQuery("#Salvar").attr('disabled', 'disabled');
-
-        }
-
-
-    }
-    
-    function atualizarGride()
-    {
-        fwGetGrid('atendimento/cad_especialidade/cad_especialidade.php', 'html_gride', {"action": "criar_gride", "psq_especialidade": ""});
-        
-    }
     
     function buscaEspecialidade(campoChave, valorChave)
     {
@@ -193,7 +115,7 @@ $frm->show();
                 }
         
                 fwUpdateFieldsJson(dados);
-                fwSelecionarAba('abaCadastro');
+      
                 
             }
         });
@@ -214,7 +136,7 @@ $frm->show();
                     return;
                 }
                 fwUpdateFieldsJson(dados);
-                fwSelecionarAba('abaCadastro');
+          
             }
         });
     }
@@ -224,22 +146,29 @@ $frm->show();
                 function(r) {
                     if (r == true)
                     {
-                        fwAjaxRequest({
+                             fwAjaxRequest({
                             "action": "cancelar",
                             "dataType": "text",
                             "data": {"codigo": valorChave},
                             "callback": function(res)
                             {
+                                 novo();
                                 if (res)
                                 {
                                     fwAlert(res);
                                 }
-                                atualizarGride();
+                               
                             }
                         });
                     }
                 })
                 )
             ;
+    }
+    
+    
+         function funcaoRetorno()
+    {
+	 return;
     }
 </script>

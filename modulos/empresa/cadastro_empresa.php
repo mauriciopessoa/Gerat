@@ -20,7 +20,7 @@ $frm->setOnlineSearch('codigo_empresa','empresa'
 	,null
 	,null,null,null,null,null,null
 	,'funcaoRetorno()'
-	,2,null,null,'razao_social','codigo_empresa',null,null,null
+	,10,null,null,'razao_social','codigo_empresa',null,null,null
 	,false // caseSensitive
 	);
 

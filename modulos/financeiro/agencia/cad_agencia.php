@@ -13,34 +13,38 @@
 
 define('REQUIRED_FIELD_MARK', '*'); // alterar a identificaï¿½ï¿½o dos campos obrigatï¿½rios para * vermelho
 
-$frm = new TForm('Cadastro de CID', 530, 1000);
+$frm = new TForm('Cadastro de agência bancária', 530, 1000);
 
 
 
-Cid_10DAO::executeSql("set names utf8"); // configurando acentuação no mysql
+Banco_agenciaDAO::executeSql("set names utf8"); // configurando acentuação no mysql
 
 
 
-$frm->addTextField('codigo','Código:',10,false,10,null,null,null,null,true)->addEvent('onblur','buscaCID(this)')->addEvent('onFocus','novo()');
+$frm->addTextField('codigo','Código:',10,false,10,null,null,null,null,true)->addEvent('onblur','buscaAgencia(this)')->addEvent('onFocus','novo()');
 
-$frm->setOnlineSearch('codigo','cid_10'
-	,'descricao|Pesquisa por nome:||||||true|true'
+$frm->setOnlineSearch('codigo','banco_agencia'
+	,'numero|Pesquisa por nome:||||||true|true'
 	,false
 	,true
 	,true // se for encontrada apenas 1 opÃ§Ã£o fazer a seleï¿½ï¿½o automaticamente
-	,'codigo|Código,cod_cid|Cid 10,descricao|Descriçao'
-	,'codigo,cod_cid,descricao'
+	,'codigo|Código,numero|Agência'
+	,'codigo,banco,numero,endereco,cidade,uf,situacao'
 	,null
 	,null,null,null,null,null,null
 	,'funcaoRetorno()'
-	,10,null,null,'descricao','codigo',null,null,null
+	,10,null,null,'numero','codigo',null,null,null
 	,false // caseSensitive
 	);
 
 
+$frm->addTextField('numero', 'Agência:', 10,true)->setCss( 'font-size', '14px')->setCss('text-transform', 'uppercase')->addEvent('onblur','upperCase(this)');
+$frm->addSelectField('banco','Banco:',false,'SELECT codigo,nome FROM sql5120145.banco')->setCss('font-size','14px');
 
-$frm->addTextField('cod_cid', 'Código CID10:', 50,true,50,null,true,null,null,true)->setCss( 'font-size', '14px')->setCss('text-transform', 'uppercase')->addEvent('onblur','upperCase(this)');
-$frm->addTextField('descricao', 'Descrição:', 50,true,50,null,true,null,null,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)');
+$frm->addTextField('endereco', 'Endereço:', 50,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)');
+$frm->addTextField('cidade', 'Cidade:', 50,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)');
+$frm->addSelectField('uf','UF:',false,'SELECT codigo,descricao FROM sql5120145.uf')->setCss('font-size','14px');
+$frm->addSelectField('situacao', 'Situação:', false, 'A=Ativa,I=Inativa', false, null, null, null, null, null, null, 'A')->setCss('font-size','14px');
 
 
 $frm->addButtonAjax('Incluir',null,null,'novo','novo','Novo...','text',false,null,'btnNovo',null,'fwSave.png','fwSave.png','fwSave.png')->setCss('font-size','24px');
@@ -111,7 +115,7 @@ $frm->show();
 
  
     
-    function buscaCID(campoChave, valorChave)
+    function buscaAgencia(campoChave, valorChave)
     {
         
         fwAjaxRequest({
@@ -156,7 +160,7 @@ $frm->show();
     }
     function grideCancelar(campoChave, valorChave)
     {
-        if (fwConfirm('Deseja excluir a CID selecionada ?',
+        if (fwConfirm('Deseja excluir a agência selecionada ?',
                 function(r) {
                     if (r == true)
                     {
