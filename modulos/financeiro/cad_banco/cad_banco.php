@@ -114,7 +114,10 @@ $frm->show();
     
     function buscaBanco(campoChave, valorChave)
     {
-        
+        if(document.getElementById("codigo").value == ""){
+            return;
+        } else {
+       
         fwAjaxRequest({
             "action": "alterar",
             "dataType": "json",
@@ -135,6 +138,7 @@ $frm->show();
             }
         });
     }
+   }
     
     function grideAlterar(campoChave, valorChave)
     {

@@ -39,21 +39,22 @@ $frm->setOnlineSearch('codigo','banco_agencia'
 
 
 $frm->addTextField('numero', 'Agência:', 10,true)->setCss( 'font-size', '14px')->setCss('text-transform', 'uppercase')->addEvent('onblur','upperCase(this)');
-$frm->addSelectField('banco','Banco:',false,'SELECT codigo,nome FROM sql5120145.banco')->setCss('font-size','14px');
+$frm->addSelectField('banco','Banco:',false,'SELECT codigo,nome FROM sql5120145.banco order by nome')->setCss('font-size','14px');
 
 $frm->addTextField('endereco', 'Endereço:', 50,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)');
 $frm->addTextField('cidade', 'Cidade:', 50,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)');
 $frm->addSelectField('uf','UF:',false,'SELECT codigo,descricao FROM sql5120145.uf')->setCss('font-size','14px');
 $frm->addSelectField('situacao', 'Situação:', false, 'A=Ativa,I=Inativa', false, null, null, null, null, null, null, 'A')->setCss('font-size','14px');
 
+$frm->closeGroup(); 
+
+$frm->processAction();
+
 
 $frm->addButtonAjax('Incluir',null,null,'novo','novo','Novo...','text',false,null,'btnNovo',null,'fwSave.png','fwSave.png','fwSave.png')->setCss('font-size','24px');
 $frm->addButtonAjax('Alterar',null,'antesSalvar','depoisSalvar','salvar','Salvando...','text',false,null,'btnSalvar',null,'fwSave.png','fwSave.png','editar.gif')->setCss('font-size','24px');
 $frm->addButton('Excluir', null, 'btnCancelar', 'grideCancelar()', null, null, null, 'lixeira.gif');
 
-
-
-$frm->processAction();
 
 
 $frm->show();
@@ -108,7 +109,7 @@ $frm->show();
     {
         fwClearChildFields();
      
-        fwSetFocus('codigo');
+        //fwSetFocus('numero');
 
     }
     
@@ -117,7 +118,11 @@ $frm->show();
     
     function buscaAgencia(campoChave, valorChave)
     {
-        
+     
+         if(document.getElementById("codigo").value == ""){
+            return;
+        } else {
+       
         fwAjaxRequest({
             "action": "alterar",
             "dataType": "json",
@@ -126,7 +131,7 @@ $frm->show();
             "callback": function(dados)
             {
                 fwClearChildFields();
-                if (dados.message)
+              if (dados.message) 
                 {
                     fwAlert(dados.message);
                     return;
@@ -137,6 +142,7 @@ $frm->show();
                 
             }
         });
+     }
     }
     
     function grideAlterar(campoChave, valorChave)
@@ -174,7 +180,7 @@ $frm->show();
                                 {
                                     fwAlert(res);
                                 }
-                                atualizarGride();
+                                novo();
                             }
                         });
                     }
@@ -186,6 +192,6 @@ $frm->show();
     
       function funcaoRetorno()
     {
-	 return;
+	 return false;
     }
 </script>

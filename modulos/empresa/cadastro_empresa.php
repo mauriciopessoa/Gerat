@@ -137,7 +137,10 @@ $frm->show();
     
     function buscaEmpresa(campoChave, valorChave)
     {
-        
+        if(document.getElementById("codigo_empresa").value == ""){
+            return;
+        } else {
+       
         fwAjaxRequest({
             "action": "alterar",
             "dataType": "json",
@@ -158,6 +161,7 @@ $frm->show();
             }
         });
     }
+   }
     
    
     
