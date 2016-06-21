@@ -21,7 +21,7 @@ Banco_agenciaDAO::executeSql("set names utf8"); // configurando acentuação no my
 
 
 
-$frm->addTextField('codigo','Código:',10,false,10,null,null,null,null,true)->addEvent('onblur','buscaAgencia(this)')->addEvent('onFocus','novo()');
+$frm->addTextField('codigo','Código:',10,false,10,null,null,null,null,true)->addEvent('onblur','buscaAgencia(this)')->addEvent('onFocus','novo()')->setCss('font-size','14px');
 
 $frm->setOnlineSearch('codigo','banco_agencia'
 	,'numero|Pesquisa por nome:||||||true|true'
@@ -38,12 +38,12 @@ $frm->setOnlineSearch('codigo','banco_agencia'
 	);
 
 
-$frm->addTextField('numero', 'Agência:', 10,true)->setCss( 'font-size', '14px')->setCss('text-transform', 'uppercase')->addEvent('onblur','upperCase(this)');
-$frm->addSelectField('banco','Banco:',false,'SELECT codigo,nome FROM sql5120145.banco order by nome')->setCss('font-size','14px');
+$frm->addTextField('numero', 'Agência:', 20,true,20,null,true,null,null,true)->setCss( 'font-size', '14px')->setCss('text-transform', 'uppercase')->addEvent('onblur','upperCase(this)');
+$frm->addSelectField('banco','Banco:',false,'SELECT codigo,nome FROM sql5120145.banco order by nome',20,true,20,null,true,null,null,true)->setCss('font-size','14px');
 
-$frm->addTextField('endereco', 'Endereço:', 50,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)');
-$frm->addTextField('cidade', 'Cidade:', 50,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)');
-$frm->addSelectField('uf','UF:',false,'SELECT codigo,descricao FROM sql5120145.uf')->setCss('font-size','14px');
+$frm->addTextField('endereco', 'Endereço:', 50,true,50,null,true,null,null,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)');
+$frm->addTextField('cidade', 'Cidade:', 30,true,30,null,true,null,null,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)');
+$frm->addSelectField('uf','UF:',false,'SELECT codigo,descricao FROM sql5120145.uf',20,true,20,null,true,null,null,true)->setCss('font-size','14px');
 $frm->addSelectField('situacao', 'Situação:', false, 'A=Ativa,I=Inativa', false, null, null, null, null, null, null, 'A')->setCss('font-size','14px');
 
 $frm->closeGroup(); 
@@ -51,9 +51,11 @@ $frm->closeGroup();
 $frm->processAction();
 
 
-$frm->addButtonAjax('Incluir',null,null,'novo','novo','Novo...','text',false,null,'btnNovo',null,'fwSave.png','fwSave.png','fwSave.png')->setCss('font-size','24px');
-$frm->addButtonAjax('Alterar',null,'antesSalvar','depoisSalvar','salvar','Salvando...','text',false,null,'btnSalvar',null,'fwSave.png','fwSave.png','editar.gif')->setCss('font-size','24px');
-$frm->addButton('Excluir', null, 'btnCancelar', 'grideCancelar()', null, null, null, 'lixeira.gif');
+$frm->addButtonAjax('Salvar',null,'antesSalvar','depoisSalvar','salvar','Salvando...','text',false,null,'btnSalvar',null,'fwSave.png','fwSave.png','imagens/btn_salvar.jpg')->setCss('font-size','24px');
+$frm->addButtonAjax('Imprimir',null,null,'novo','novo','Novo...','text',false,null,'btnNovo',null,'imagens/btn_imprimir.jpg','imagens/btn_imprimir.jpg','imagens/btn_imprimir.jpg')->setCss('font-size','24px');
+$frm->addButton('Excluir', null, 'btnCancelar', 'grideCancelar()', null, null, null, 'imagens/btn_excluir.jpg');
+
+
 
 
 
@@ -101,7 +103,7 @@ $frm->show();
         {
             fwAlert('Dados gravados com SUCESSO!');
             fwClearChildFields();
-           novo();
+          
         }
     }
 

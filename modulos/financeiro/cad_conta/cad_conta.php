@@ -20,7 +20,7 @@ Banco_contaDAO::executeSql("set names utf8"); // configurando acentuação no mysq
 
 
 
-$frm->addTextField('codigo', 'Código:', 10, false, 10, null, null, null, null, true)->addEvent('onblur', 'buscaConta(this)')->addEvent('onFocus', 'novo()');
+$frm->addTextField('codigo', 'Código:', 10, false, 10, null, null, null, null, true)->addEvent('onblur', 'buscaConta(this)')->addEvent('onFocus', 'novo()')->setCss('font-size','14px');
 
 $frm->setOnlineSearch('codigo', 'banco_conta'
         , 'numero|Pesquisa por n° da conta:||||||true|true'
@@ -38,14 +38,16 @@ $frm->setOnlineSearch('codigo', 'banco_conta'
 
 
 
-$frm->addSelectField('agencia', 'Agência:', false, 'SELECT codigo,numero FROM sql5120145.banco_agencia order by numero')->setCss('font-size', '14px');
+$frm->addSelectField('agencia', 'Agência:', false, 'SELECT codigo,numero FROM sql5120145.banco_agencia order by numero',20,true,20,null,true,null,null,true)->setCss('font-size', '14px');
 $frm->addTextField('numero', 'Conta:', 50, true, 20, null, true, null, null, true)->setCss('font-size', '14px')->setCss('text-transform', 'uppercase')->addEvent('onblur', 'upperCase(this)');
 $frm->addTextField('saldo', 'Saldo em R$:', 20, true, 20, null, true, null, null, true)->setCss('font-size', '14px')->setCss('text-transform', 'uppercase')->addEvent('onblur', 'upperCase(this)');
 
 
-$frm->addButtonAjax('Incluir',null,null,'novo','novo','Novo...','text',false,null,'btnNovo',null,'fwSave.png','fwSave.png','fwSave.png')->setCss('font-size','24px');
-$frm->addButtonAjax('Alterar',null,'antesSalvar','depoisSalvar','salvar','Salvando...','text',false,null,'btnSalvar',null,'fwSave.png','fwSave.png','editar.gif')->setCss('font-size','24px');
-$frm->addButton('Excluir', null, 'btnCancelar', 'grideCancelar()', null, null, null, 'lixeira.gif');
+$frm->addButtonAjax('Salvar',null,'antesSalvar','depoisSalvar','salvar','Salvando...','text',false,null,'btnSalvar',null,'fwSave.png','fwSave.png','imagens/btn_salvar.jpg')->setCss('font-size','24px');
+$frm->addButtonAjax('Imprimir',null,null,'novo','novo','Novo...','text',false,null,'btnNovo',null,'imagens/btn_imprimir.jpg','imagens/btn_imprimir.jpg','imagens/btn_imprimir.jpg')->setCss('font-size','24px');
+$frm->addButton('Excluir', null, 'btnCancelar', 'grideCancelar()', null, null, null, 'imagens/btn_excluir.jpg');
+
+
 
 
 

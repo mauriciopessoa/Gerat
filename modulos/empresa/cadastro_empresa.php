@@ -8,7 +8,7 @@ $frm = new TForm('Cadastro de Empresa', 530, 1000);
 
 EmpresaDAO::executeSql("set names utf8"); // configurando acentuação no mysql
 
-$frm->addTextField('codigo_empresa','Código:',10,false,10,null,null,null,null,true)->addEvent('onblur','buscaEmpresa(this)')->addEvent('onFocus','novo()');
+$frm->addTextField('codigo_empresa','Código:',10,false,10,null,null,null,null,true)->setCss('font-size','14px')->addEvent('onblur','buscaEmpresa(this)')->addEvent('onFocus','novo()');
 
 $frm->setOnlineSearch('codigo_empresa','empresa'
 	,'razao_social|Razão Social:||||||true|true'
@@ -24,22 +24,22 @@ $frm->setOnlineSearch('codigo_empresa','empresa'
 	,false // caseSensitive
 	);
 
-$frm->addTextField('razao_social', 'Razão Social:', 50,true,50,null,false,null,null,true)->setCss( 'font-size', '14px')->setCss('text-transform', 'uppercase')->addEvent('onblur','upperCase(this)');
-$frm->addTextField('fantasia', 'Nome Fantasia:', 50,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)');
-$frm->addTextField('endereco', 'Endereço:', 50,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)');
-$frm->addTextField('bairro', 'Bairro:', 50,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)');
-$frm->addTextField('cidade', 'Cidade:', 50,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)');
+$frm->addTextField('razao_social', 'Razão Social:', 50,true,50,null,false,null,null,true)->setCss( 'font-size', '14px')->setCss('text-transform', 'uppercase')->addEvent('onblur','upperCase(this)')->setCss('text-transform', 'uppercase');
+$frm->addTextField('fantasia', 'Nome Fantasia:', 50,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)')->setCss('text-transform', 'uppercase');
+$frm->addTextField('endereco', 'Endereço:', 50,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)')->setCss('text-transform', 'uppercase');
+$frm->addTextField('bairro', 'Bairro:', 50,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)')->setCss('text-transform', 'uppercase');
+$frm->addTextField('cidade', 'Cidade:', 50,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)')->setCss('text-transform', 'uppercase');
 $frm->addCepField('cep','CEP:',9,true);
 $frm->addSelectField('uf','UF:',false,'SELECT codigo,descricao FROM sql5120145.uf')->setCss('font-size','14px');
-$frm->addEmailField(email,'Email:',50,true);
+$frm->addEmailField(email,'Email:',50,true)->setCss('text-transform', 'uppercase');
 
-$frm->addFoneField('telefone1','Telefone principal:',20,true);
-$frm->addFoneField('telefone2','Telefone alternativo:',20,true);
-$frm->addFoneField('fax','Fax:',11,true);
+$frm->addFoneField('telefone1','Telefone principal:',20,true)->setCss('text-transform', 'uppercase');
+$frm->addFoneField('telefone2','Telefone alternativo:',20,true)->setCss('text-transform', 'uppercase');
+$frm->addFoneField('fax','Fax:',11,true)->setCss('text-transform', 'uppercase');
 
 
 
-$frm->addCpfCnpjField('cnpj','CNPJ:',true,null,true)->setCss('font-size','14px');
+$frm->addCpfCnpjField('cnpj','CNPJ:',true,null,true)->setCss('font-size','14px')->setCss('text-transform', 'uppercase');
 $frm->addTextField('ie','Inscrição Estadual:',18,true)->setCss('font-size','14px')->addEvent('onkeyup', 'maskIe(this)');
 $frm->addSelectField('situacao', 'Situação:', false, 'A=Ativa,I=Inativa', false, null, null, null, null, null, null, 'A')->setCss('font-size','14px');
 
@@ -50,9 +50,11 @@ $frm->closeGroup(); // fim das abas
 $frm->processAction();
 
 
-$frm->addButtonAjax('Incluir',null,null,'novo','novo','Novo...','text',false,null,'btnNovo',null,'fwSave.png','fwSave.png','fwSave.png')->setCss('font-size','24px');
-$frm->addButtonAjax('Alterar',null,'antesSalvar','depoisSalvar','salvar','Salvando...','text',false,null,'btnSalvar',null,'fwSave.png','fwSave.png','editar.gif')->setCss('font-size','24px');
-$frm->addButton('Excluir', null, 'btnCancelar', 'grideCancelar()', null, null, null, 'lixeira.gif');
+$frm->addButtonAjax('Salvar',null,'antesSalvar','depoisSalvar','salvar','Salvando...','text',false,null,'btnSalvar',null,'fwSave.png','fwSave.png','imagens/btn_salvar.jpg')->setCss('font-size','24px');
+$frm->addButtonAjax('Imprimir',null,null,'novo','novo','Novo...','text',false,null,'btnNovo',null,'imagens/btn_imprimir.jpg','imagens/btn_imprimir.jpg','imagens/btn_imprimir.jpg')->setCss('font-size','24px');
+$frm->addButton('Excluir', null, 'btnCancelar', 'grideCancelar()', null, null, null, 'imagens/btn_excluir.jpg');
+
+
 
 $frm->show();
 
@@ -163,7 +165,31 @@ $frm->show();
     }
    }
     
-   
+       function grideCancelar(campoChave, valorChave)
+    {
+        if (fwConfirm('Deseja excluir a empresa selecionada ?',
+                function(r) {
+                    if (r == true)
+                    {
+                        fwAjaxRequest({
+                            "action": "cancelar",
+                            "dataType": "text",
+                            "data": {"codigo": valorChave},
+                            "callback": function(res)
+                            {
+                                if (res)
+                                {
+                                    fwAlert(res);
+                                }
+                                novo();
+                            }
+                        });
+                    }
+                })
+                )
+            ;
+    }
+    
     
     
     function funcaoRetorno()

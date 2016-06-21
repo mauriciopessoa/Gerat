@@ -1,0 +1,1 @@
+a:3:{s:7:"Código";a:1:{i:0;s:2:"36";}s:6:"Cid 10";a:1:{i:0;s:8:"CADTESTE";}s:10:"Descriçao";a:1:{i:0;s:8:"CADTESTE";}}

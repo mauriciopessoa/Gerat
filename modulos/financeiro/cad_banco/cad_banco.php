@@ -21,7 +21,7 @@ BancoDAO::executeSql("set names utf8"); // configurando acentuação no mysql
 
 
 
-$frm->addTextField('codigo','Código:',10,false,10,null,null,null,null,true)->addEvent('onblur','buscaBanco(this)')->addEvent('onFocus','novo()');
+$frm->addTextField('codigo','Código:',10,false,10,null,null,null,null,true)->addEvent('onblur','buscaBanco(this)')->addEvent('onFocus','novo()')->setCss('font-size','14px');
 
 $frm->setOnlineSearch('codigo','banco'
 	,'nome|Pesquisa por nome:||||||true|true'
@@ -44,9 +44,10 @@ $frm->addTextField('nome', 'Nome:', 50,true,50,null,true,null,null,true)->setCss
 $frm->addSelectField('situacao', 'Situação:', false, 'A=Ativa,I=Inativa', false, null, null, null, null, null, null, 'A')->setCss('font-size','14px');
 
 
-$frm->addButtonAjax('Incluir',null,null,'novo','novo','Novo...','text',false,null,'btnNovo',null,'fwSave.png','fwSave.png','fwSave.png')->setCss('font-size','24px');
-$frm->addButtonAjax('Alterar',null,'antesSalvar','depoisSalvar','salvar','Salvando...','text',false,null,'btnSalvar',null,'fwSave.png','fwSave.png','editar.gif')->setCss('font-size','24px');
-$frm->addButton('Excluir', null, 'btnCancelar', 'grideCancelar()', null, null, null, 'lixeira.gif');
+
+$frm->addButtonAjax('Salvar',null,'antesSalvar','depoisSalvar','salvar','Salvando...','text',false,null,'btnSalvar',null,'fwSave.png','fwSave.png','imagens/btn_salvar.jpg')->setCss('font-size','24px');
+$frm->addButtonAjax('Imprimir',null,null,'novo','novo','Novo...','text',false,null,'btnNovo',null,'imagens/btn_imprimir.jpg','imagens/btn_imprimir.jpg','imagens/btn_imprimir.jpg')->setCss('font-size','24px');
+$frm->addButton('Excluir', null, 'btnCancelar', 'grideCancelar()', null, null, null, 'imagens/btn_excluir.jpg');
 
 
 
@@ -97,7 +98,7 @@ $frm->show();
         {
             fwAlert('Dados gravados com SUCESSO!');
             fwClearChildFields();
-           novo();
+          
         }
     }
 
@@ -175,7 +176,7 @@ $frm->show();
                                 {
                                     fwAlert(res);
                                 }
-                                atualizarGride();
+                                novo();
                             }
                         });
                     }

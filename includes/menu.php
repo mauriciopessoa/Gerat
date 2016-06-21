@@ -11,7 +11,7 @@ $menu->add(16,1,'Atendimento',null,null,'folderopen16.gif');
         $menu->add(18,16,'Especialidade','atendimento/cad_especialidade/cad_especialidade.php','Cadastro de Especialidade','folderAzulOpen.gif');
 $menu->add(19,1,'Financeiro',null,null,'folderopen16.gif');
         $menu->add(20,19,'Bancos','financeiro/cad_banco.php','Cadastro de banco','folderAzulOpen.gif');
-        $menu->add(27,19,'Agências','financeiro/agencia/cad_agencia.php','Cadastro de banco','folderAzulOpen.gif');
+        $menu->add(27,19,'Agências','financeiro/agencia/cad_agencia.php','Cadastro de agência','folderAzulOpen.gif');
         $menu->add(28,19,'Contas','financeiro/cad_conta/cad_conta.php','Cadastro de conta','folderAzulOpen.gif');
 $menu->add(2,0,'Relatórios',null,null,'print16.gif');
 	$menu->add(21,2,'Cirurgias x Médicos',null,null,'print16.gif');
