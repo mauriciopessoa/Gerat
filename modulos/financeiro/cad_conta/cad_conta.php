@@ -36,9 +36,10 @@ $frm->setOnlineSearch('codigo', 'banco_conta'
         , false // caseSensitive
 );
 
+$mixOptions = TPDOConnection::executeSql( 'SELECT a.codigo,CONCAT(a.numero," - ",b.nome) as numero FROM sql5120145.banco_agencia a, sql5120145.banco b where b.codigo = a.banco order by a.numero,b.nome');
 
 
-$frm->addSelectField('agencia', 'Agência:', false, 'SELECT codigo,numero FROM sql5120145.banco_agencia order by numero',20,true,20,null,true,null,null,true)->setCss('font-size', '14px');
+$frm->addSelectField('agencia', 'Agência:', false, $mixOptions,20,true,20,null,true,null,null,true)->setCss('font-size', '14px');
 $frm->addTextField('numero', 'Conta:', 50, true, 20, null, true, null, null, true)->setCss('font-size', '14px')->setCss('text-transform', 'uppercase')->addEvent('onblur', 'upperCase(this)');
 $frm->addTextField('saldo', 'Saldo em R$:', 20, true, 20, null, true, null, null, true)->setCss('font-size', '14px')->setCss('text-transform', 'uppercase')->addEvent('onblur', 'upperCase(this)');
 
@@ -46,7 +47,6 @@ $frm->addTextField('saldo', 'Saldo em R$:', 20, true, 20, null, true, null, null
 $frm->addButtonAjax('Salvar',null,'antesSalvar','depoisSalvar','salvar','Salvando...','text',false,null,'btnSalvar',null,'fwSave.png','fwSave.png','imagens/btn_salvar.jpg')->setCss('font-size','24px');
 $frm->addButtonAjax('Imprimir',null,null,'novo','novo','Novo...','text',false,null,'btnNovo',null,'imagens/btn_imprimir.jpg','imagens/btn_imprimir.jpg','imagens/btn_imprimir.jpg')->setCss('font-size','24px');
 $frm->addButton('Excluir', null, 'btnCancelar', 'grideCancelar()', null, null, null, 'imagens/btn_excluir.jpg');
-
 
 
 
