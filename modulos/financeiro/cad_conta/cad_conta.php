@@ -32,7 +32,7 @@ $frm->setOnlineSearch('codigo', 'banco_conta'
         , null
         , null, null, null, null, null, null
         , 'funcaoRetorno()'
-        , 10, null, null, 'numero', 'codigo', null, null, null
+        , 50, null, null, 'numero', 'codigo', null, null, null
         , false // caseSensitive
 );
 
@@ -41,8 +41,8 @@ $mixOptions = TPDOConnection::executeSql( 'SELECT a.codigo,CONCAT(a.numero," - "
 
 $frm->addSelectField('agencia', 'Agência:', false, $mixOptions,20,true,20,null,true,null,null,true)->setCss('font-size', '14px');
 $frm->addTextField('numero', 'Conta:', 50, true, 20, null, true, null, null, true)->setCss('font-size', '14px')->setCss('text-transform', 'uppercase')->addEvent('onblur', 'upperCase(this)');
-$frm->addTextField('saldo', 'Saldo em R$:', 20, true, 20, null, true, null, null, true)->setCss('font-size', '14px')->setCss('text-transform', 'uppercase')->addEvent('onblur', 'upperCase(this)');
-
+//$frm->addNumberField('saldo', 'Saldo em R$:', 10, true, 2, null, true, null, null, true,null,null,null,true)->setCss('font-size', '14px')->setCss('text-transform', 'uppercase')->addEvent('onSubmit', 'moeda2float(saldo.value)');
+$frm->addTextField('saldo', 'Saldo em R$:', 15, true, 15, null, true, null, null, true)->setCss('font-size', '14px')->setCss('text-transform', 'uppercase')->addEvent('onkeyup', 'moeda(this)')->addEvent('onblur','moeda2float(this)');
 
 $frm->addButtonAjax('Salvar',null,'antesSalvar','depoisSalvar','salvar','Salvando...','text',false,null,'btnSalvar',null,'fwSave.png','fwSave.png','imagens/btn_salvar.jpg')->setCss('font-size','24px');
 $frm->addButtonAjax('Imprimir',null,null,'novo','novo','Novo...','text',false,null,'btnNovo',null,'imagens/btn_imprimir.jpg','imagens/btn_imprimir.jpg','imagens/btn_imprimir.jpg')->setCss('font-size','24px');
@@ -77,8 +77,13 @@ $frm->show();
         {
             return false;
         }
-
-        return true;
+      
+        if(document.getElementById("saldo").value == "0")
+        {
+        
+            document.getElementById("saldo").value ='0';
+        }
+            return true;
 
     }
 
@@ -89,6 +94,7 @@ $frm->show();
             fwAlert(res);
         } else
         {
+            
             fwAlert('Dados gravados com SUCESSO!');
             fwClearChildFields();
            
@@ -182,4 +188,25 @@ $frm->show();
     {
         return;
     }
+    
+    
+    function moeda2float(moeda){
+            v = moeda.value;
+            v = v.replace(".","");
+
+            v = v.replace(",",".");
+           // v=  v.replace(/(\d{1})(\d{1,2})$/,"$1.$2") // coloca virgula antes dos ultimos 2 digitos
+            saldo.value = v;
+    }
+    
+    function moeda(z){
+        v = z.value;
+        v=v.replace(/\D/g,"") // permite digitar apenas numero
+        v=v.replace(/(\d{1})(\d{14})$/,"$1.$2") // coloca ponto antes dos ultimos digitos
+        v=v.replace(/(\d{1})(\d{11})$/,"$1.$2") // coloca ponto antes dos ultimos 11 digitos
+        v=v.replace(/(\d{1})(\d{8})$/,"$1.$2") // coloca ponto antes dos ultimos 8 digitos
+        v=v.replace(/(\d{1})(\d{5})$/,"$1.$2") // coloca ponto antes dos ultimos 5 digitos
+        v=v.replace(/(\d{1})(\d{1,2})$/,"$1,$2") // coloca virgula antes dos ultimos 2 digitos
+    z.value = v;
+}
 </script>
