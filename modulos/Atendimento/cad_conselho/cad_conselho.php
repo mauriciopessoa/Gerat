@@ -25,7 +25,7 @@ inner join uf c on c.codigo= b.uf'
 	,false
 	,true
 	,true // se for encontrada apenas 1 opÃ§Ã£o fazer a seleï¿½ï¿½o automaticamente
-	,'a.codigo|Código,descricao_conselho|Conselho,sigla|UF'
+	,'a.codigo as codigo_conselho|Código,descricao_conselho|Conselho,sigla|UF'
 	,'codigo,descricao_conselho,descricao'
 	,null
 	,null,null,null,null,null,null
@@ -83,13 +83,14 @@ $frm->show();
     function depoisSalvar(res)
     {
         
-        if (res.indexOf('nome_especialidade') >= 0)   
+        if (res.indexOf('conselho_sigla') >= 0)   
         {
             
-            fwAlert('Especialiadade já cadastrada.');
+            fwAlert('Conselho já cadastrado.');
         }
            else
         {
+            fwAlert(res);
             fwAlert('Dados gravados com SUCESSO!');
             fwClearChildFields();
           //  novo();
@@ -152,7 +153,7 @@ $frm->show();
     }
     function grideCancelar(campoChave, valorChave)
     {
-        if (fwConfirm('Deseja excluir esta especialidade ?',
+        if (fwConfirm('Deseja excluir o conselho ?',
                 function(r) {
                     if (r == true)
                     {

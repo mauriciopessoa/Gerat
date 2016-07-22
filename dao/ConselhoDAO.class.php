@@ -36,6 +36,12 @@ class ConselhoDAO extends TPDOConnection
 								from conselho where codigo = ?', $values );
 	}
 	//--------------------------------------------------------------------------------
+        public static function selectEspecifico( $query=null )
+	{
+		return self::executeSql($query);
+	}
+        
+        //--------------------------------------------------------------------------------
 	public static function selectAll( $orderBy=null, $where=null )
 	{
 		return self::executeSql('select
@@ -47,6 +53,9 @@ class ConselhoDAO extends TPDOConnection
 		( ($orderBy) ? ' order by '.$orderBy:''));
 	}
 	//--------------------------------------------------------------------------------
+        
+        
+        
 	public static function update ( ConselhoVO $objVo )
 	{
 		$values = array( $objVo->getSigla()

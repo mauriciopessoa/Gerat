@@ -47,6 +47,14 @@ class Conselho_ufDAO extends TPDOConnection
 		( ($orderBy) ? ' order by '.$orderBy:''));
 	}
 	//--------------------------------------------------------------------------------
+        
+        	
+        public static function selectEspecifico( $query=null )
+	{
+		return self::executeSql($query);
+	}
+        
+        //--------------------------------------------------------------------------------
 	public static function update ( Conselho_ufVO $objVo )
 	{
 		$values = array( $objVo->getConselho()
