@@ -1,16 +1,16 @@
 <?php
 
-if ($_POST['psq_especialidade'])
+if ($_POST['psq_cid'])
 {
     
     
-    $dados = EspecialidadeDAO::selectAll(null, 'descricao like \'%'.$_POST['psq_especialidade'].'%\'');  
+    $dados = ConselhoDAO::selectAll(null, 'descricao_conselho like \'%'.$_POST['psq_cid'].'%\'');  
     echo $dados;
-    $g = new TGrid('gd', 'Especialidade cadastrada', $dados, null, null, 'codigo', null, 15, null);
-    $g->addColumn('codigo', 'id', 400, 'left');
-    $g->addColumn('descricao', 'Descrição', 300, 'left');
-    $g->addButton('Alterar', null, 'btnAlterar', 'grideAlterar()', null, 'editar.gif', null, 'Alterar Especialidade');
-    $g->addButton('Cancelar', null, 'btnCancelar', 'grideCancelar()', null, 'lixeira.gif', null, 'Excluir CID');
+    $g = new TGrid('gd', 'Conselho cadastrado', $dados, null, null, 'codigo', null, 15, null);
+    $g->addColumn('codigo', 'id', 100, 'left');
+    $g->addColumn('descricao_conselho', 'Descrição', 100, 'left');
+    $g->addButton('Alterar', null, 'btnAlterar', 'grideAlterar()', null, 'editar.gif', null, 'Alterar Conselho');
+    $g->addButton('Cancelar', null, 'btnCancelar', 'grideCancelar()', null, 'lixeira.gif', null, 'Excluir Conselho');
 
     //  $g->addButton( 'Imprimir', null, 'btnpdf','gerar_pdf',null,'print16.gif' );
     $g->addFooter('Total de registros: ' . $g->getRowCount());

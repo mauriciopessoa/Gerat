@@ -17,7 +17,8 @@ EspecialidadeDAO::executeSql("set names utf8"); // configurando acentuação no my
 
 
 $frm->addTextField('codigo','Código:',10,false,10,null,null,null,null,true)->addEvent('onblur','buscaEspecialidade(this)')->setCss('font-size','14px');
-
+$frm->addLinkField('pesquisa', null, '<img id="codigo_search" style="width:12px;height:13px;cursor:pointer;" title="Pesquisa" onclick="fwModalBox("Pesquisa","?subform=1&amp;modulo=modulos/atendimento/cad_conselho/pesquisa.php&amp;subform=1&amp;sessionField=atendimento/cad_conselho.php_formdin_codigo",400,600)" src="base/imagens/search.gif">',  'fwModalBox("Pesquisa","?subform=1&amp;modulo=modulos/atendimento/cad_conselho/pesquisa.php&amp;subform=1&amp;sessionField=atendimento/cad_conselho.php_formdin_codigo",400,600)', $strUrl, null, false, null, null);
+/*
 $frm->setOnlineSearch('codigo','conselho as a
 inner join conselho_uf b on b.conselho= a.codigo
 inner join uf c on c.codigo= b.uf'
@@ -33,7 +34,7 @@ inner join uf c on c.codigo= b.uf'
 	,null,null,null,'descricao_conselho','codigo',null,null,null
 	,false // caseSensitive
 	);
-
+*/
 $frm->addTextField('sigla', 'Sigla Conselho:', 20,true,20,null,true,null,null,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)')->setCss('text-transform', 'uppercase');
 $frm->addTextField('descricao_conselho', 'Descrição:', 30,true,30,null,true,null,null,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)')->setCss('text-transform', 'uppercase');
 $frm->addSelectField('uf','UF Conselho:',false,'SELECT codigo,descricao FROM sql5120145.uf',null,true)->setCss('font-size','14px');
