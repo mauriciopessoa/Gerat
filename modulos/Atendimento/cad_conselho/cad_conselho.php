@@ -17,7 +17,10 @@ EspecialidadeDAO::executeSql("set names utf8"); // configurando acentuação no my
 
 
 $frm->addTextField('codigo','Código:',10,false,10,null,null,null,null,true)->addEvent('onblur','buscaEspecialidade(this)')->setCss('font-size','14px');
-$frm->addLinkField('pesquisa', null, '<img id="codigo_search" style="width:12px;height:13px;cursor:pointer;" title="Pesquisa" onclick="fwModalBox("Pesquisa","?subform=1&amp;modulo=modulos/atendimento/cad_conselho/pesquisa.php&amp;subform=1&amp;sessionField=atendimento/cad_conselho.php_formdin_codigo",400,600)" src="base/imagens/search.gif">',  'fwModalBox("Pesquisa","?subform=1&amp;modulo=modulos/atendimento/cad_conselho/pesquisa.php&amp;subform=1&amp;sessionField=atendimento/cad_conselho.php_formdin_codigo",400,600)', $strUrl, null, false, null, null);
+//$frm->addLinkField('pesquisa', null, '<img id="codigo_search" style="width:12px;height:13px;cursor:pointer;" title="Pesquisa" onclick="fwModalBox("Pesquisa","?subform=1&amp;modulo=modulos/atendimento/cad_conselho/pesquisa.php&amp;subform=1&amp;sessionField=atendimento/cad_conselho.php_formdin_codigo",550,650)" src="base/imagens/search.gif">',  'fwModalBox("Pesquisa","?subform=1&amp;modulo=modulos/atendimento/cad_conselho/pesquisa.php&amp;subform=1&amp;sessionField=atendimento/cad_conselho.php_formdin_codigo",550,650)', $strUrl, null, false, null, null);
+$frm->addLinkField('pesquisa', null, '<img id="codigo_search" style="width:12px;height:13px;cursor:pointer;" title="Pesquisa" onclick="fwModalBox("Este é um Subcadastro",app_index_file+"?modulo=pesquisa.php",380,820,callbackModaBox,{"codigo":""});" src="base/imagens/search.gif">',  'fwModalBox("Pesquisa","?subform=1&amp;modulo=modulos/atendimento/cad_conselho/pesquisa.php&amp;subform=1&amp;sessionField=atendimento/cad_conselho.php_formdin_codigo",550,650,callbackModaBox,{"codigo":""});', $strUrl, null, false, null, null);
+
+
 /*
 $frm->setOnlineSearch('codigo','conselho as a
 inner join conselho_uf b on b.conselho= a.codigo
@@ -60,7 +63,24 @@ $frm->show();
 
 <script>
 
-    
+    function subcadastro()
+{
+	// Passsando o campo nome como json. Se não for informado o valor, será lido do formulário
+	//fwModalBox('Este é um Subcadastro','../teste.php');
+	//fwModalBox('Este é um Subcadastro','www.globo.com.br');
+	fwModalBox('Este é um Subcadastro',app_index_file+'?modulo=pesquisa.php',380,820,callbackModaBox,{'codigo':''});
+}
+
+function callbackModaBox(data, doc )
+{
+	var msg;
+    // exemplo de tratamento do retorno do subcadastro
+	jQuery("#codigo").val(data.codigo);
+        jQuery("#uf").val(data.uf);
+        jQuery("#sigla").val(data.sigla);
+        jQuery("#descricao_conselho").val(data.descricao_conselho);
+	
+}
 
 	
 	function upperCase(obj)

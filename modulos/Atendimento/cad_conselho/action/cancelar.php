@@ -1,3 +1,8 @@
 <?php
-EspecialidadeDAO::delete($frm->get('codigo'));
+
+
+Conselho_ufDAO::delete($frm->get('codigo'));
+ConselhoDAO::delete($frm->get('codigo'));
+
+echo "Conselho excluído com sucesso";
 ?>

@@ -1,1 +1,0 @@
-a:2:{s:8:"Conselho";a:10:{i:0;s:3:"CRM";i:1;s:3:"CRO";i:2;s:4:"CRO4";i:3;s:9:"ASDFASDFA";i:4;s:4:"BGBG";i:5;s:3:"AAA";i:6;s:3:"AAA";i:7;s:9:"DFASDFAS2";i:8;s:6:"LIOMAR";i:9;s:6:"LIOMAR";}s:2:"UF";a:10:{i:0;s:3:"CRM";i:1;s:3:"CRO";i:2;s:4:"CRO4";i:3;s:6:"DFASFD";i:4;s:5:"GBGBG";i:5;s:3:"AAA";i:6;s:3:"AAA";i:7;s:8:"DFASDFA2";i:8;s:6:"LIOMAR";i:9;s:6:"LIOMAR";}}

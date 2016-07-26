@@ -1,12 +1,17 @@
 <?php
 
-$frm = new TForm('Pesquisa', 550, 500);
+$frm = new TForm('Pesquisa', 500, 600);
+$frm->addHiddenField('codigo', $strLabel,10);
+$frm->addHiddenField('uf', $strLabel,10);
+$frm->addHiddenField('sigla', $strLabel,10);
+$frm->addHiddenField('descricao_conselho', $strLabel,10);
 $frm->addTextField('psq_cid', 'Localizar por Nome:', 40, false)->setAttribute('noclear', 'true')->setTooltip('Pesquisar - Informe o nome ou parte do nome e clique no botï¿½o Pesquisar!');
+//$frm->addHiddenField('codigo');
+
 
 $frm->addTextField('psq_cid', 'Localizar por Nome:', 40, false)->setAttribute('noclear', 'true')->setTooltip('Pesquisar - Informe o nome ou parte do nome e clique no botï¿½o Pesquisar!');
 $frm->addButton('Pesquisar', null, 'btnPesquisar', 'atualizarGride()', null, false, false);
 $frm->addHtmlField('html_gride');
-$frm->closeGroup(); // fim das abas
 $frm->processAction();
 $frm->show();
 
@@ -15,11 +20,11 @@ function setgrid(){
 if (empty($_POST['psq_cid']))
 {
         
-    $dados = ConselhoDAO::selectEspecifico(null, 'select a.*,b.conselho,b.uf from conselho a inner join conselho_uf b on a.codigo= b.conselho where descricao_conselho= '.$_POST['psq_cid']);  
-    echo $dados;
+    $dados = ConselhoDAO::selectEspecifico(null, 'select a.*,b.conselho,b.uf as uf from conselho a inner join conselho_uf b on a.codigo= b.conselho where descricao_conselho= '.$_POST['psq_cid']);  
     $g = new TGrid('gd', 'Conselho cadastrado', $dados, null, null, 'codigo', null, 15, null);
-    $g->addColumn('codigo', 'id', 400, 'left');
+    $g->addColumn('codigo', 'Código', 400, 'left');
     $g->addColumn('descricao_conselho', 'Descrição', 300, 'left');
+    $g->addColumn('uf', 'UF', 300, 'left');
     $g->addButton('Alterar', null, 'btnAlterar', 'grideAlterar()', null, 'editar.gif', null, 'Alterar Especialidade');
     $g->addButton('Cancelar', null, 'btnCancelar', 'grideCancelar()', null, 'lixeira.gif', null, 'Excluir CID');
 
@@ -57,34 +62,7 @@ function tratarBotoes($rowNum, $button, $objColumn, $aData)
 ?>
 
 <script>
-    
-    //jQuery("#data_cadastro").attr('readonly', 'true');
-    //jQuery("#Novo").attr('disabled', 'true');
-    function pegaNomeConvenio(e)
-    {
-        //fwAtualizarCampos('nome_convenio', jQuery("#cod_convenio option:selected").text());
-        
-    }
-    function pegaNomeCirurgia(e)
-    {
-        //fwAtualizarCampos('desc_cirurgia_principal', jQuery("#cod_cirurgia_principal option:selected").text());
-        
-    }
-    function pegaNomeCirurgiao(e)
-    {
-        //fwAtualizarCampos('nome_cirurgiao_principal', jQuery("#cod_cirurgiao_principal option:selected").text());
-        
-    }
-    function pegaNomeEspecialidade(e)
-    {
-        //fwAtualizarCampos('desc_especialidade', jQuery("#cod_especialidade option:selected").text());
-        
-    }
-    function sai(e)
-    {
-        //alert(jQuery("#data_cadastro").val());
-        
-    }
+
 	
 	function upperCase(obj)
 	{
@@ -119,21 +97,7 @@ function tratarBotoes($rowNum, $button, $objColumn, $aData)
         fwSelecionarAba('abaCadastro');
         fwSetFocus('codigo');
     }
-    function abaClick(pc, aba, id)
-    {
-        if (id == 'abaCadastro')
-        {
-            if (jQuery("#psq_cid").val() != '')
-            {
-                atualizarGride();
-            }
-        }
-        if (id == 'abaCID')
-        {
-            jQuery("#Salvar").attr('disabled', 'disabled');
-        }
-    }
-    
+
     function atualizarGride()
     {
         fwGetGrid('atendimento/cad_conselho/cad_conselho.php', 'html_gride', {"action": "criar_gride", "psq_cid": ""});
@@ -179,20 +143,21 @@ function tratarBotoes($rowNum, $button, $objColumn, $aData)
                     return;
                 }
                 fwUpdateFieldsJson(dados);
-                fwSelecionarAba('abaCadastro');
+                fwClose_window();
+                
             }
         });
     }
     function grideCancelar(campoChave, valorChave)
     {
-        if (fwConfirm('Deseja cancelar a cirurgia ?',
+        if (fwConfirm('Deseja cancelar o conselho?',
                 function(r) {
                     if (r == true)
                     {
                         fwAjaxRequest({
                             "action": "cancelar",
                             "dataType": "text",
-                            "data": {"id": valorChave},
+                            "data": {"codigo": valorChave},
                             "callback": function(res)
                             {
                                 if (res)

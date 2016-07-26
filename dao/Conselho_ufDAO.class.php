@@ -23,7 +23,7 @@ class Conselho_ufDAO extends TPDOConnection
 	public static function delete( $id )
 	{
 		$values = array($id);
-		return self::executeSql('delete from conselho_uf where codigo = ?',$values);
+		return self::executeSql('delete from conselho_uf where conselho = ?',$values);
 	}
 	//--------------------------------------------------------------------------------
 	public static function select( $id )
