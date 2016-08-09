@@ -7,49 +7,41 @@
  */
 
 
-
-
-
-
 define('REQUIRED_FIELD_MARK', '*'); // alterar a identificaï¿½ï¿½o dos campos obrigatï¿½rios para * vermelho
 
-$frm = new TForm('Cadastro de agência bancária', 530, 1000);
+$frm = new TForm('Cadastro de subgrupo financeiro', 530, 1000);
 
 
 
-Banco_agenciaDAO::executeSql("set names utf8"); // configurando acentuação no mysql
+Grupo_financeiroDAO::executeSql("set names utf8"); // configurando acentuação no mysql
 
 
+$frm->addTextField('codigo','Código:',10,false,10,null,null,null,null,true)->addEvent('onblur','buscaEspecialidade(this)')->setCss('font-size','14px');
+//$frm->addLinkField('pesquisa', null, '<img id="codigo_search" style="width:12px;height:13px;cursor:pointer;" title="Pesquisa" onclick="fwModalBox("Pesquisa","?subform=1&amp;modulo=modulos/atendimento/cad_conselho/pesquisa.php&amp;subform=1&amp;sessionField=atendimento/cad_conselho.php_formdin_codigo",550,650)" src="base/imagens/search.gif">',  'fwModalBox("Pesquisa","?subform=1&amp;modulo=modulos/atendimento/cad_conselho/pesquisa.php&amp;subform=1&amp;sessionField=atendimento/cad_conselho.php_formdin_codigo",550,650)', $strUrl, null, false, null, null);
+$frm->addLinkField('pesquisa', null, '<img id="codigo_search" style="width:12px;height:13px;cursor:pointer;" title="Pesquisa" onclick="",380,820,callbackModaBox,{"codigo":""});" src="base/imagens/search.gif">',  'fwModalBox("Pesquisa","?subform=1&amp;modulo=modulos/financeiro/cad_subgrupo_financeiro/pesquisa.php&amp;subform=1&amp;sessionField=financeiro/cad_subgrupo_financeiro.php_formdin_codigo",550,650,callbackModaBox,{"codigo":""});', $strUrl, null, false, null, null);
 
-$frm->addTextField('codigo','Código:',10,false,10,null,null,null,null,true)->addEvent('onblur','buscaAgencia(this)')->addEvent('onFocus','novo()')->setCss('font-size','14px');
 
-$frm->setOnlineSearch('codigo','banco_agencia'
-	,'numero|Pesquisa por nome:||||||true|true'
+/*
+$frm->setOnlineSearch('codigo','conselho as a
+inner join conselho_uf b on b.conselho= a.codigo
+inner join uf c on c.codigo= b.uf'
+	,'descricao_conselho|Pesquisa por nome:||||||true|true'
 	,false
 	,true
 	,true // se for encontrada apenas 1 opÃ§Ã£o fazer a seleï¿½ï¿½o automaticamente
-	,'codigo|Código,numero|Agência'
-	,'codigo,banco,numero,endereco,cidade,uf,situacao'
+	,'a.codigo as codigo_conselho|Código,descricao_conselho|Conselho,sigla|UF'
+	,'codigo,descricao_conselho,descricao'
 	,null
 	,null,null,null,null,null,null
 	,'funcaoRetorno()'
-	,10,null,null,'numero','codigo',null,null,null
+	,null,null,null,'descricao_conselho','codigo',null,null,null
 	,false // caseSensitive
 	);
+*/
 
-
-$frm->addTextField('numero', 'Agência:', 20,true,20,null,true,null,null,true)->setCss( 'font-size', '14px')->setCss('text-transform', 'uppercase')->addEvent('onblur','upperCase(this)');
-$frm->addSelectField('banco','Banco:',false,'SELECT codigo,nome FROM sql5120145.banco order by nome',20,true,20,null,true,null,null,true)->setCss('font-size','14px');
-
-$frm->addTextField('endereco', 'Endereço:', 50,true,50,null,true,null,null,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)');
-$frm->addTextField('cidade', 'Cidade:', 30,true,30,null,true,null,null,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)');
-$frm->addSelectField('uf','UF:',false,'SELECT codigo,descricao FROM uf',20,true,20,null,true,null,null,true)->setCss('font-size','14px');
+$frm->addTextField('descricao', 'Descrição:', 30,true,30,null,true,null,null,true)->setCss('font-size','14px')->addEvent('onblur','upperCase(this)')->setCss('text-transform', 'uppercase');
+$frm->addSelectField('grupo','Grupo:',false,'SELECT codigo,descricao FROM grupo_financeiro',20,true,20,null,true,null,null,true)->setCss('font-size','14px');
 $frm->addSelectField('situacao', 'Situação:', false, 'A=Ativa,I=Inativa', false, null, null, null, null, null, null, 'A')->setCss('font-size','14px');
-
-$frm->closeGroup(); 
-
-$frm->processAction();
-
 
 $frm->addButtonAjax('Salvar',null,'antesSalvar','depoisSalvar','salvar','Salvando...','text',false,null,'btnSalvar',null,'fwSave.png','fwSave.png','imagens/btn_salvar.jpg')->setCss('font-size','24px');
 $frm->addButtonAjax('Imprimir',null,null,'novo','novo','Novo...','text',false,null,'btnNovo',null,'imagens/btn_imprimir.jpg','imagens/btn_imprimir.jpg','imagens/btn_imprimir.jpg')->setCss('font-size','24px');
@@ -57,6 +49,7 @@ $frm->addButton('Excluir', null, 'btnCancelar', 'grideCancelar()', null, null, n
 
 
 
+$frm->processAction();
 
 
 $frm->show();
@@ -71,13 +64,29 @@ $frm->show();
 
 <script>
 
-    
+    function subcadastro()
+{
+	// Passsando o campo nome como json. Se não for informado o valor, será lido do formulário
+	//fwModalBox('Este é um Subcadastro','../teste.php');
+	//fwModalBox('Este é um Subcadastro','www.globo.com.br');
+	fwModalBox('Este é um Subcadastro',app_index_file+'?modulo=pesquisa.php',380,820,callbackModaBox,{'codigo':''});
+}
+
+function callbackModaBox(data, doc )
+{
+	var msg;
+    // exemplo de tratamento do retorno do subcadastro
+	jQuery("#codigo").val(data.codigo);
+        jQuery("#descricao").val(data.descricao);
+        jQuery("#grupo").val(data.grupo);
+        jQuery("#situacao").val(data.situacao);
+	
+}
 
 	
 	function upperCase(obj)
 	{
 		obj.value = obj.value.toUpperCase();
-                
 	}
 	
 
@@ -95,33 +104,31 @@ $frm->show();
 
     function depoisSalvar(res)
     {
-        if (res)
+        
+        if (res.indexOf('conselho_sigla') >= 0)   
+        {
+            
+            fwAlert('Conselho já cadastrado.');
+        }
+           else
         {
             fwAlert(res);
-        }
-        else
-        {
             fwAlert('Dados gravados com SUCESSO!');
             fwClearChildFields();
-          
+          //  novo();
         }
     }
 
     function novo()
     {
         fwClearChildFields();
-     
-        //fwSetFocus('numero');
-
+        fwSetFocus('codigo');
     }
-    
 
- 
     
-    function buscaAgencia(campoChave, valorChave)
+    function buscaEspecialidade(campoChave, valorChave)
     {
-     
-         if(document.getElementById("codigo").value == ""){
+        if(document.getElementById("codigo").value == ""){
             return;
         } else {
        
@@ -133,19 +140,19 @@ $frm->show();
             "callback": function(dados)
             {
                 fwClearChildFields();
-              if (dados.message) 
+                if (dados.message)
                 {
                     fwAlert(dados.message);
                     return;
                 }
         
                 fwUpdateFieldsJson(dados);
-            
+      
                 
             }
         });
-     }
     }
+   }
     
     function grideAlterar(campoChave, valorChave)
     {
@@ -162,27 +169,28 @@ $frm->show();
                     return;
                 }
                 fwUpdateFieldsJson(dados);
-              
+          
             }
         });
     }
     function grideCancelar(campoChave, valorChave)
     {
-        if (fwConfirm('Deseja excluir a agência selecionada ?',
+        if (fwConfirm('Deseja excluir o subgrupo financeiro ?',
                 function(r) {
                     if (r == true)
                     {
-                        fwAjaxRequest({
+                             fwAjaxRequest({
                             "action": "cancelar",
                             "dataType": "text",
                             "data": {"codigo": valorChave},
                             "callback": function(res)
                             {
+                                 novo();
                                 if (res)
                                 {
                                     fwAlert(res);
                                 }
-                                novo();
+                               
                             }
                         });
                     }
@@ -192,8 +200,8 @@ $frm->show();
     }
     
     
-      function funcaoRetorno()
+         function funcaoRetorno()
     {
-	 return false;
+	 return;
     }
 </script>
